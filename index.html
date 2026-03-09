@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Family Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="Images/Logo-MFD-colored.svg" media="(prefers-color-scheme: light)" />
+  <link rel="icon" type="image/svg+xml" href="Images/Logo-MFD-white.svg" media="(prefers-color-scheme: dark)" />
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <script src="script.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- ── NAVBAR ── -->
+    <nav>
+      <a href="#" class="logo"><img src="Images/Logo-MFD-colored.svg" alt=""></a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+      <label for="nav-toggle" class="nav-toggle-label" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Accueil</a></li>
+        <li><a href="#Solution">Solution</a></li>
+        <li><a href="#Offre">Offre Pro</a></li>
+        <li><a href="#Propos">A propos</a></li>
+        <li><a href="#Contact">Contact</a></li>
+      </ul>
+      <a href="https://app.myfamilydashboard.com" target="_blank" class="btn-nav">
+        Se connecter
+      </a>
+    </nav>
+
+    <div class="sections">
+
+      <!-- ════════════════════════════════════════
+         1. HERO
+    ════════════════════════════════════════ -->
+      <div class="hero-wrap reveal">
+
+        <!-- Hero Card -->
+        <div class="hero-card">
+          <div class="noise"></div>
+          <div class="blob blob-left"></div>
+          <div class="blob blob-right"></div>
+
+
+          <!-- Company tags -->
+          <div class="company-tags">
+            <div class="company-tag">
+              <div class="dot"></div>BOUYGUES
+            </div>
+            <div class="company-tag">
+              <div class="dot"></div>CARBIOS
+            </div>
+            <div class="company-tag">
+              <div class="dot"></div>AXA
+            </div>
+            <div class="company-tag">
+              <div class="dot"></div>ALTEN
+            </div>
+            <div class="company-tag">
+              <div class="dot"></div>AIR LIQUIDE
+            </div>
+          </div>
+
+          <!-- Image + text -->
+          <div class="image-text">
+            <div class="hero-image">
+              <img src="Images/Photo/Hero.png" alt="Hero image" />
+
+            </div>
+
+            <!-- Side icons (decorative) -->
+            <div class="side-icons">
+              <div class="icon-box"><i class="ph ph-buildings"></i></div>
+              <div class="icon-box"><i class="ph ph-user-circle"></i></div>
+              <div class="icon-box"><i class="ph ph-chart-line"></i></div>
+              <div class="icon-box"><i class="ph ph-shield-check"></i></div>
+              <div class="icon-box"><i class="ph ph-gear"></i></div>
+            </div>
+
+            <div class="hero-content">
+              <h1 class="hero-h1">La plateforme pensée pour les professionnels du patrimoine et leurs clients.</h1>
+              <p class="hero-p">MFD n'est pas un CRM ni un outil de distribution financière : c'est une infrastructure
+                patrimoniale conçue pour structurer le dialogue entre le professionnel et son client.</p>
+              <div class="hero-cta">
+                <button id="btn-demo" class="btn-primary">Demander une démo</button>
+                <div id="dropdown-menu" class="dropdown-content">
+                  <a href="#Contact">Nous contacter</a>
+                  <div class="separator"></div>
+                  <a href="https://myfamilydashboard.fillout.com/demo-my-family-dashboard" target="_blank">Prendre
+                    rendez-vous <i class="ph ph-arrow-up-right"></i></a>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Graph -->
+          <div class="graph-area">
+            <img src="Images/Graph.svg" alt="Performance graph" />
+          </div>
+        </div>
+
+        <!-- Features row -->
+        <div class="features-row">
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <div class="feature-text">
+              <p class="feature-title">Productivité et fiabilité</p>
+              <p class="feature-desc">Intégration et structuration des données patrimoniales dans une base unique.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <div class="feature-text">
+              <p class="feature-title">Cockpit patrimonial sécurisé</p>
+              <p class="feature-desc">Vision 360° du patrimoine : actifs financiers, immobilier, non coté, passifs,
+                engagements, structures juridiques.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <div class="feature-text">
+              <p class="feature-title">Outil d'augmentation du métier de Family Office</p>
+              <p class="feature-desc">Support structurant pour un dialogue client orienté objectifs, arbitrages et
+                stratégie long terme.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Demo banner 
+        <div class="demo-section" style="width:100%">
+
+          <div class="demo-container ">
+            <div class="noise"></div>
+            <div class="demo-blob"></div>
+            <p class="demo-title">Demandez dès maintenant une démo !</p>
+            <a href="#" class="btn-ghost demo-cta">Accéder au pilote</a>
+          </div>
+        </div>
+      -->
+
+
+      </div><!-- /hero-wrap -->
+
+      <!-- ════════════════════════════════════════
+         2. SOLUTION
+    ════════════════════════════════════════ -->
+      <div class="solution-wrap" id="Solution">
+        <div class="section-header">
+          <h2>Solution</h2>
+          <p class="section-sub">Les Multi Family Office opèrent dans un environnement à très forte complexité
+            patrimoniale, avec des exigences élevées de personnalisation, de fiabilité et de confidentialité. Pourtant,
+            leurs outils restent souvent hétérogènes et peu adaptés à cette réalité.</p>
+        </div>
+
+        <h3>Découvrez nos solutions pour :</h3>
+
+        <div class="solution-cards">
+          <!-- Card FO -->
+          <div class="solution-card">
+            <div class="noise"></div>
+            <div class="solution-card-grain"></div>
+            <div class="solution-card-header">
+              <span class="solution-card-title">Family offices</span>
+            </div>
+            <div class="solution-card-desc">
+              <ul>
+                <li><span class="dot8"></span><strong>Piloter l’ensemble des actifs</strong> d’un ou plusieurs
+                  patrimoines complexes
+                  (immobilier, sociétés,
+                  placements privés, œuvres d’art, assurances, trusts).</li>
+                <li><span class="dot8"></span><strong>Coordonner les actions des professionnels</strong> (notaire,
+                  avocat, CGP,
+                  expert-comptable).</li>
+              </ul>
+              <ul>
+                <li><span class="dot8"></span><strong>Produire une vision synthétique dynamique</strong> pour le family
+                  member /
+                  bénéficiaire.</li>
+                <li><span class="dot8"></span><strong>Gérer l’équilibre</strong> entre confidentialité, gouvernance
+                  familiale, reporting
+                  et transmission.</li>
+              </ul>
+
+            </div>
+            <div class="solution-card-icon">
+              <img src="Images/Icon/Family Office.svg" alt="" />
+            </div>
+          </div>
+          <!-- Card CGP -->
+          <div class="solution-card">
+            <div class="noise"></div>
+            <div class="solution-card-grain"></div>
+            <div class="solution-card-header">
+              <span class="solution-card-title">CGP</span>
+            </div>
+            <div class="solution-card-desc">
+              <ul>
+                <li><span class="dot8"></span><strong>Comprendre le profil patrimonial global du client</strong>
+                  (actifs, passifs, flux, structures).</li>
+                <li><span class="dot8"></span><strong>Identifier des opportunités</strong> d’optimisation financière,
+                  fiscale et successorale.</li>
+              </ul>
+              <ul>
+                <li><span class="dot8"></span><strong>Préparer les rendez-vous de conseil</strong> et produire des
+                  rapports patrimoniaux.</li>
+                <li><span class="dot8"></span><strong>Suivre les engagements clients</strong> dans le temps (allocation,
+                  données fiscales, contrats).</li>
+              </ul>
+
+            </div>
+            <div class="solution-card-icon">
+              <img src="Images/Icon/CGP.svg" alt="" />
+            </div>
+          </div>
+          <!-- Card Notaires -->
+          <div class="solution-card">
+            <div class="noise"></div>
+            <div class="solution-card-grain"></div>
+            <div class="solution-card-header">
+              <span class="solution-card-title">Notaires</span>
+            </div>
+            <div class="solution-card-desc">
+              <ul>
+                <li><span class="dot8"></span><strong>Préparer et fiabiliser</strong> les actes successoraux, donation,
+                  PACS, divorce, mariage, SCI/transmission.</li>
+                <li><span class="dot8"></span><strong>Collecter les informations patrimoniales documentées</strong> sans
+                  échange papier.</li>
+              </ul>
+              <ul>
+                <li><span class="dot8"></span><strong>Modéliser les liens</strong> familiaux, usufruit, indivision,
+                  SCI/SCP, démembrement.</li>
+                <li><span class="dot8"></span><strong>Suivre les évolutions patrimoniales</strong> pour anticiper les
+                  opérations juridiques.</li>
+              </ul>
+
+            </div>
+            <div class="solution-card-icon">
+              <img src="Images/Icon/Notaire.svg" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════
+         3. OFFRE PRO
+    ════════════════════════════════════════ -->
+      <div class="offre-wrap" id="Offre">
+        <div class="section-header">
+          <h2>Notre offre destinée aux professionnels</h2>
+          <p class="section-sub">Equipez vos clients d’un outil digital de suivi patrimonial organisé. Offrez leur une
+            vision globale et hiérarchisée. Accompagnez les dans chacune de leurs décision.</p>
+        </div>
+
+        <div class="offre-card">
+          <div class="noise"></div>
+
+          <!-- Left content -->
+          <div class="offre-left">
+            <h3>Programme pilote réservé aux professionnels du patrimoine</h3>
+
+            <div class="offre-icons">
+              <div class="container-offre-icons">
+                <img src="Images/Icon/Family Office.svg" alt="Family Office" />
+                <img src="Images/Icon/Notaire.svg" alt="Notaire" />
+                <img src="Images/Icon/CGP.svg" alt="CGP" />
+              </div>
+
+            </div>
+
+            <div class="offre-list">
+              <div class="offre-list-item">
+                <div class="offre-list-head"><span class="dot8"></span><strong>Accès gratuit à la plateforme sur l'année
+                    2026</strong></div>
+                <div class="offre-list-sub">
+                  <p>Création de l'environnement du Family Office et ses collaborateurs</p>
+                  <p>Gestion des dossiers clients</p>
+                </div>
+              </div>
+              <div class="offre-list-item">
+                <div class="offre-list-head"><span class="dot8"></span><strong>Accompagnement sur mesure</strong></div>
+                <div class="offre-list-sub">
+                  <p>Session d'onboarding</p>
+                  <p>Aide à la structuration des premiers dossiers patrimoniaux</p>
+                </div>
+              </div>
+              <div class="offre-list-item">
+                <div class="offre-list-head"><span class="dot8"></span><strong>Engagement de co-construction</strong>
+                </div>
+                <div class="offre-list-sub">
+                  <p>Points de suivi mensuels</p>
+                  <p>Recueil des retours terrain</p>
+                  <p>Possibilité d'influencer la roadmap produit</p>
+                </div>
+              </div>
+              <div class="offre-list-item">
+                <div class="offre-list-head"><span class="dot8"></span><strong>Conditions early adopters, sans
+                    engagement long terme</strong></div>
+              </div>
+            </div>
+
+            <div class="offre-dropdown">
+              <button class="btn-ghost" id="btn-demo-2">
+                Demander une démo
+              </button>
+
+              <div id="dropdown-menu-2" class="dropdown-content">
+                <a href="#Contact">Nous contacter</a>
+                <div class="separator"></div>
+                <a href="https://myfamilydashboard.fillout.com/demo-my-family-dashboard" target="_blank">Prendre
+                  rendez-vous <i class="ph ph-arrow-up-right"></i></a>
+
+              </div>
+
+
+            </div>
+
+          </div>
+
+          <!-- Right photo -->
+          <div class="offre-photo">
+            <img src="/Images/Photo/Offre pilote.png" alt="Offre pilote" />
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════
+         4. A PROPOS
+    ════════════════════════════════════════ -->
+      <div class="apropos-wrap" id="Propos">
+
+        <!-- Header -->
+        <div class="apropos-intro">
+          <h2>A propos</h2>
+
+          <div class="apropos-arrow">
+            <img src="Images/Icon/a-propos.png" alt="">
+          </div>
+        </div>
+
+        <!-- Notre conviction -->
+        <div class="apropos-block">
+          <div class="apropos-text">
+            <h3>Notre conviction</h3>
+            <p>Le patrimoine des familles s'est complexifié. Les structures juridiques se multiplient, les actifs se
+              diversifient, les interlocuteurs se spécialisent. Pourtant, l'infrastructure de pilotage reste fragmentée.
+            </p>
+            <p>Les professionnels du patrimoine doivent composer avec une donnée éclatée, hétérogène, rarement
+              consolidée dans une architecture cohérente. Cette fragmentation limite la vision stratégique et freine
+              l'industrialisation du conseil à haute valeur ajoutée.</p>
+            <p>Nous sommes convaincus qu'une nouvelle génération d'outils est nécessaire : non pas des logiciels centrés
+              sur le produit, mais une <strong>infrastructure pensée pour le pilotage patrimonial global</strong>.</p>
+          </div>
+          <div class="apropos-img">
+            <img src="Images/Image/Conviction.png" alt="Notre conviction" />
+          </div>
+        </div>
+
+        <!-- La genèse -->
+        <div class="apropos-block">
+          <div class="apropos-img apropos-img-horizontal">
+            <img src="Images/Image/Genese.png" alt="La genèse" />
+          </div>
+          <div class="apropos-text">
+            <h3>La genèse</h3>
+            <p>My Family Dashboard est né de cette ambition : créer un socle technologique indépendant capable de
+              modéliser le patrimoine dans sa réalité juridique, financière et humaine.</p>
+            <p>Dès l'origine, nous avons conçu la plateforme comme :</p>
+            <ul>
+              <li>un moteur de structuration multi-entités,</li>
+              <li>un outil de consolidation transverse,</li>
+              <li>un environnement collaboratif sécurisé entre professionnels et familles,</li>
+              <li>une architecture évolutive capable d'accompagner le cycle de vie patrimonial.</li>
+            </ul>
+          </div>
+          <div class="apropos-img apropos-img-vertical">
+            <img src="Images/Image/Genese.png" alt="La genèse" />
+          </div>
+
+        </div>
+
+        <!-- Souveraineté des données -->
+        <div class="apropos-block">
+          <div class="apropos-text">
+            <h3>Un principe fondateur : la souveraineté des données</h3>
+            <p>Nous avons fait un choix structurant : l'utilisateur final demeure propriétaire de son espace et de ses
+              données. Chaque famille dispose de son environnement dédié.</p>
+            <p>Le professionnel intervient avec des droits d'accès définis, dans un cadre transparent.</p>
+            <p>Ce modèle renforce la confiance, pérennise la relation et repositionne le professionnel dans son rôle
+              essentiel : stratège et architecte patrimonial.</p>
+          </div>
+          <div class="apropos-img">
+            <img src="Images/Image/Souverainete.png" alt="Souveraineté des données" />
+          </div>
+        </div>
+
+        <!-- Notre ambition -->
+        <div class="apropos-block">
+          <div class="apropos-img apropos-img-horizontal">
+            <img src="Images/Image/Ambition.png" alt="Notre ambition" />
+          </div>
+          <div class="apropos-text">
+            <h3>Notre ambition</h3>
+            <p>Devenir l'infrastructure de référence pour les professionnels du patrimoine souhaitant :</p>
+            <ul>
+              <li>structurer des patrimoines complexes,</li>
+              <li>élever leur niveau de reporting,</li>
+              <li>sécuriser la transmission d'information,</li>
+              <li>inscrire leur pratique dans une logique durable et indépendante.</li>
+            </ul>
+          </div>
+          <div class="apropos-img apropos-img-vertical">
+            <img src="Images/Image/Ambition.png" alt="Notre ambition" />
+          </div>
+
+        </div>
+
+        <!-- Citation -->
+        <div class="quote-banner">
+          <div class="noise"></div>
+          <img class="quote-mark open" src="Images/Icon/quote-left.png" alt="">
+          <img class="quote-mark close" src="Images/Icon/quote-right.png" alt="">
+
+          <div class="quote-content">
+            <div class="quote-text">
+              <blockquote>My Family Dashboard n'est pas un outil supplémentaire. C'est une fondation technologique pour
+                le patrimoine de demain.</blockquote>
+              <div class="quote-attribution">
+                <p class="name">François Jubin</p>
+                <p class="role">CEO - My Family Dashboard</p>
+              </div>
+            </div>
+            <div class="quote-photo">
+              <img src="/Images/Photo/FJ.png" alt="François Jubin" />
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /apropos-wrap -->
+
+      <div class="contact-wrap" id="Contact">
+        <div class="section-header">
+          <h2>Contact</h2>
+          <p class="section-sub">Vous souhaitez en savoir plus sur My Family Dashboard ? N'hésitez pas à nous contacter
+            !</p>
+        </div>
+        <div class="contact-content">
+          <div class="contact-info">
+            <img src="Images/Icon/Mail.png" alt="">
+            <div class="contact-email"><a title="Cliquer pour copier">contact@myfamilydashboard.com <i
+                  class="ph ph-copy"></i></a>
+              <div id="alert" class="alert">Adresse copiée !</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /sections -->
+  </div><!-- /page -->
+  <footer>
+    <div class="noise"></div>
+    <div class="blob blob-left"></div>
+    <div class="blob blob-right"></div>
+    <div class="footer-lists">
+      <div class="footer-list">
+        <ul>
+          <li><a href="#">Accueil</a></li>
+          <li><a href="#Solution">Solution</a></li>
+          <li><a href="#Offre">Offre Pro</a></li>
+          <li><a href="#Propos">A propos</a></li>
+          <li><a href="#Contact">Contact</a></li>
+      </div>
+      <div class="footer-list">
+        <ul>
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+          <li><a href="#">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-logo">
+      <a href="#"> <img src="Images/Logo-MFD-colored.svg" alt="My Family Dashboard logo">
+      </a>
+    </div>
+    <div class="footer-other">
+      <div class="social-networks">
+        <a href="https://www.linkedin.com/in/fran%C3%A7ois-jubin-40774a6/" target="_blank"><img
+            src="Images/Icon/Linkedin.svg" style="width: 24px; height: auto;" alt=""></a>
+      </div>
+      <div class="app">
+        <a href="https://app.myfamilydashboard.com" target="_blank">Accéder à l'app <i
+            class="ph ph-arrow-up-right"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ///////////////////SCRIPT//////////////////// -->
+  <script>
+
+
+    //FONCTION DROPOWN (générique pour tous les boutons/menus)
+    function setupDropdown(btnId, menuId) {
+      const btn = document.getElementById(btnId);
+      const menu = document.getElementById(menuId);
+
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        menu.classList.toggle("active");
+      });
+    }
+
+    // Appel pour chaque bouton/menu
+    setupDropdown("btn-demo", "dropdown-menu");
+    setupDropdown("btn-demo-2", "dropdown-menu-2");
+
+    // Fermer tous les menus si clic extérieur
+    document.addEventListener("click", function () {
+      document.querySelectorAll(".dropdown-content").forEach(menu => {
+        menu.classList.remove("active");
+      });
+    });
+
+
+    //FONCTION COPIER EMAIL
+    document.querySelector(".contact-email a").addEventListener("click", function (e) {
+      e.preventDefault(); // empêche l'ouverture du client mail
+
+      navigator.clipboard.writeText("contact@myfamilydashboard.com")
+        .then(function () {
+          // Feedback visuel pour l'utilisateur
+
+          const alert = document.getElementById("alert");
+          alert.style.display = "block";
+
+          setTimeout(function () {
+            alert.style.display = "none";
+          }, 1000);
+        });
+    });
+  </script>
+
+
+
+</body>
+
+</html>
