@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MFD — Éditeur de contenu</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --surface: #13161d;
+      --surface2: #1a1e27;
+      --border: #252a36;
+      --border-focus: #4f7fff;
+      --accent: #4f7fff;
+      --accent2: #7c5cfc;
+      --text: #e8eaf0;
+      --text-muted: #6b7280;
+      --text-dim: #9ca3af;
+      --success: #22c55e;
+      --success-bg: #052e16;
+      --error: #f87171;
+      --error-bg: #2d0f0f;
+      --tag-bg: #1e2538;
+      --tag-border: #2e3a52;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Sora', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── TOP BAR ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-badge {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: -0.5px;
+    }
+
+    .header-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .header-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: var(--mono);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-export {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+
+    .btn-export:hover {
+      opacity: 0.85;
+    }
+
+    .btn-export:active {
+      transform: scale(0.97);
+    }
+
+    .btn-reset {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-dim);
+      font-family: var(--sans);
+      font-size: 13px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-reset:hover {
+      border-color: var(--text-muted);
+      color: var(--text);
+    }
+
+    /* ── LAYOUT ── */
+    .app {
+      display: flex;
+      flex: 1;
+      height: calc(100vh - 60px);
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 16px 0;
+    }
+
+    .sidebar-section {
+      padding: 4px 12px;
+      margin-bottom: 4px;
+    }
+
+    .sidebar-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--text-muted);
+      padding: 10px 12px 6px;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text-dim);
+      transition: background 0.15s, color 0.15s;
+      border: 1px solid transparent;
+    }
+
+    .sidebar-item:hover {
+      background: var(--surface2);
+      color: var(--text);
+    }
+
+    .sidebar-item.active {
+      background: var(--tag-bg);
+      border-color: var(--tag-border);
+      color: var(--text);
+    }
+
+    .sidebar-item .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .sidebar-item .count {
+      margin-left: auto;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      background: var(--surface2);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px 40px;
+    }
+
+    .section-panel {
+      display: none;
+    }
+
+    .section-panel.active {
+      display: block;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .panel-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .panel-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .panel-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ── FIELD GROUPS ── */
+    .field-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .field-group-header {
+      padding: 14px 20px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .field-group-name {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-dim);
+    }
+
+    .field-group-tag {
+      font-size: 10px;
+      font-family: var(--mono);
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      color: var(--accent);
+    }
+
+    .field-list {
+      padding: 8px 0;
+    }
+
+    /* ── FIELD ITEM ── */
+    .field-item {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .field-item:last-child {
+      border-bottom: none;
+    }
+
+    .field-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .field-label .tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--accent2);
+      background: rgba(124, 92, 252, 0.1);
+      padding: 1px 6px;
+      border-radius: 3px;
+    }
+
+    .field-input,
+    .field-textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 14px;
+      padding: 10px 14px;
+      resize: vertical;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    .field-textarea {
+      min-height: 90px;
+      line-height: 1.6;
+    }
+
+    .field-input:focus,
+    .field-textarea:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(79, 127, 255, 0.12);
+    }
+
+    /* ── TOAST NOTIFICATION ── */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--success-bg);
+      border: 1px solid var(--success);
+      color: var(--success);
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 999;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 24px 0;
+    }
+
+    /* ── LIVE COUNTER ── */
+    .char-count {
+      font-size: 10px;
+      font-family: var(--mono);
+      color: var(--text-muted);
+      text-align: right;
+      margin-top: 5px;
+    }
+
+    /* ── PUBLISH BUTTON ── */
+    .btn-publish {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 8px;
+      border: none;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+
+    .btn-publish:hover {
+      opacity: 0.85;
+    }
+
+    .btn-publish:active {
+      transform: scale(0.97);
+    }
+
+    .btn-publish:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* ── STATUS BADGE ── */
+    .deploy-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--text-muted);
+    }
+
+    .deploy-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .deploy-dot.ok {
+      background: var(--success);
+      box-shadow: 0 0 6px #22c55e88;
+    }
+
+    .deploy-dot.err {
+      background: var(--error);
+    }
+
+    .deploy-dot.loading {
+      background: #f59e0b;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: 0.3
+      }
+    }
+
+    /* ── MODAL OVERLAY ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 32px;
+      width: 460px;
+      max-width: 90vw;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .modal-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .modal-field {
+      margin-bottom: 14px;
+    }
+
+    .modal-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .modal-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13px;
+      padding: 10px 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .modal-input:focus {
+      border-color: var(--border-focus);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+
+    .btn-cancel {
+      padding: 8px 18px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-dim);
+      font-family: var(--sans);
+      font-size: 13px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-cancel:hover {
+      border-color: var(--text-muted);
+      color: var(--text);
+    }
+
+    /* ── TOAST error variant ── */
+    .toast.error {
+      background: var(--error-bg);
+      border-color: var(--error);
+      color: var(--error);
+    }
+
+    /* ── CONFIG NOTICE ── */
+    .config-notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: rgba(79, 127, 255, 0.07);
+      border: 1px solid rgba(79, 127, 255, 0.25);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 12px;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    .config-notice strong {
+      color: var(--accent);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <div class="logo-badge">MFD</div>
+      <div>
+        <div class="header-title">Éditeur de contenu</div>
+        <div class="header-subtitle">index.html</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="deploy-status" id="deploy-status">
+        <div class="deploy-dot" id="deploy-dot"></div>
+        <span id="deploy-label">Prêt</span>
+      </div>
+      <button class="btn-reset" onclick="resetAll()">↺ Réinitialiser</button>
+      <button class="btn-export" onclick="exportHTML()">⬇ Exporter</button>
+      <button class="btn-publish" onclick="openPublishModal()" id="btn-publish">🚀 Publier</button>
+    </div>
+  </header>
+
+  <!-- APP BODY -->
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-label">Sections</div>
+      <div class="sidebar-item active" onclick="showPanel('navbar', this)">
+        <span class="dot"></span> Navbar
+        <span class="count">3</span>
+      </div>
+      <div class="sidebar-item" onclick="showPanel('hero', this)">
+        <span class="dot"></span> Hero
+        <span class="count">4</span>
+      </div>
+      <div class="sidebar-item" onclick="showPanel('features', this)">
+        <span class="dot"></span> Features
+        <span class="count">6</span>
+      </div>
+      <div class="sidebar-item" onclick="showPanel('solution', this)">
+        <span class="dot"></span> Solution
+        <span class="count">9</span>
+      </div>
+      <div class="sidebar-item" onclick="showPanel('offre', this)">
+        <span class="dot"></span> Offre Pro
+        <span class="count">6</span>
+      </div>
+      <div class="sidebar-item" onclick="showPanel('apropos', this)">
+        <span class="dot"></span> À propos
+        <span class="count">8</span>
+      </div>
+      <div class="sidebar-item" onclick="showPanel('contact', this)">
+        <span class="dot"></span> Contact
+        <span class="count">2</span>
+      </div>
+      <div class="sidebar-item" onclick="showPanel('footer', this)">
+        <span class="dot"></span> Footer
+        <span class="count">2</span>
+      </div>
+    </aside>
+
+    <!-- MAIN PANELS -->
+    <main class="main">
+
+      <!-- ══ NAVBAR ══ -->
+      <div class="section-panel active" id="panel-navbar">
+        <div class="panel-header">
+          <div class="panel-icon">🧭</div>
+          <div>
+            <div class="panel-title">Navbar</div>
+            <div class="panel-desc">Liens de navigation et bouton de connexion</div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Navigation</span>
+            <span class="field-group-tag">&lt;nav&gt;</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Lien — Accueil <span class="tag">li a</span></div>
+              <input class="field-input" id="nav-home" value="Accueil" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Lien — Solution</div>
+              <input class="field-input" id="nav-solution" value="Solution" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Lien — Offre Pro</div>
+              <input class="field-input" id="nav-offre" value="Offre Pro" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Lien — À propos</div>
+              <input class="field-input" id="nav-propos" value="A propos" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Lien — Contact</div>
+              <input class="field-input" id="nav-contact" value="Contact" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Bouton CTA <span class="tag">.btn-nav</span></div>
+              <input class="field-input" id="nav-cta" value="Se connecter" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ HERO ══ -->
+      <div class="section-panel" id="panel-hero">
+        <div class="panel-header">
+          <div class="panel-icon">🚀</div>
+          <div>
+            <div class="panel-title">Hero</div>
+            <div class="panel-desc">Section principale en haut de page</div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Contenu principal</span>
+            <span class="field-group-tag">.hero-content</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Titre H1 <span class="tag">h1.hero-h1</span></div>
+              <textarea class="field-textarea" id="hero-h1"
+                oninput="updateCount(this,'hero-h1-count')">La plateforme pensée pour les professionnels du patrimoine et leurs clients.</textarea>
+              <div class="char-count" id="hero-h1-count">92 car.</div>
+            </div>
+            <div class="field-item">
+              <div class="field-label">Paragraphe intro <span class="tag">p.hero-p</span></div>
+              <textarea class="field-textarea" id="hero-p"
+                oninput="updateCount(this,'hero-p-count')">MFD n'est pas un CRM ni un outil de distribution financière : c'est une infrastructure patrimoniale conçue pour structurer le dialogue entre le professionnel et son client.</textarea>
+              <div class="char-count" id="hero-p-count">172 car.</div>
+            </div>
+            <div class="field-item">
+              <div class="field-label">Bouton CTA principal <span class="tag">#btn-demo</span></div>
+              <input class="field-input" id="hero-btn" value="Demander une démo" />
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Tags entreprises</span>
+            <span class="field-group-tag">.company-tags</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Tag 1</div>
+              <input class="field-input" id="tag1" value="BOUYGUES" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Tag 2</div>
+              <input class="field-input" id="tag2" value="CARBIOS" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Tag 3</div>
+              <input class="field-input" id="tag3" value="AXA" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Tag 4</div>
+              <input class="field-input" id="tag4" value="ALTEN" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Tag 5</div>
+              <input class="field-input" id="tag5" value="AIR LIQUIDE" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ FEATURES ══ -->
+      <div class="section-panel" id="panel-features">
+        <div class="panel-header">
+          <div class="panel-icon">⚡</div>
+          <div>
+            <div class="panel-title">Features Row</div>
+            <div class="panel-desc">Les 3 blocs de fonctionnalités sous le hero</div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Feature 1</span>
+            <span class="field-group-tag">.feature-item:1</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Titre</div>
+              <input class="field-input" id="feat1-title" value="Productivité et fiabilité" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Description</div>
+              <textarea class="field-textarea" id="feat1-desc"
+                style="min-height:70px">Intégration et structuration des données patrimoniales dans une base unique.</textarea>
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Feature 2</span>
+            <span class="field-group-tag">.feature-item:2</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Titre</div>
+              <input class="field-input" id="feat2-title" value="Cockpit patrimonial sécurisé" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Description</div>
+              <textarea class="field-textarea" id="feat2-desc"
+                style="min-height:70px">Vision 360° du patrimoine : actifs financiers, immobilier, non coté, passifs, engagements, structures juridiques.</textarea>
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Feature 3</span>
+            <span class="field-group-tag">.feature-item:3</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Titre</div>
+              <input class="field-input" id="feat3-title" value="Outil d'augmentation du métier de Family Office" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Description</div>
+              <textarea class="field-textarea" id="feat3-desc"
+                style="min-height:70px">Support structurant pour un dialogue client orienté objectifs, arbitrages et stratégie long terme.</textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SOLUTION ══ -->
+      <div class="section-panel" id="panel-solution">
+        <div class="panel-header">
+          <div class="panel-icon">💡</div>
+          <div>
+            <div class="panel-title">Solution</div>
+            <div class="panel-desc">Section solution avec les 3 cartes profils</div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">En-tête de section</span>
+            <span class="field-group-tag">#Solution .section-header</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Titre H2</div>
+              <input class="field-input" id="sol-h2" value="Solution" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Sous-titre</div>
+              <textarea class="field-textarea"
+                id="sol-sub">Les Multi Family Office opèrent dans un environnement à très forte complexité patrimoniale, avec des exigences élevées de personnalisation, de fiabilité et de confidentialité. Pourtant, leurs outils restent souvent hétérogènes et peu adaptés à cette réalité.</textarea>
+            </div>
+            <div class="field-item">
+              <div class="field-label">Intro cards <span class="tag">h3</span></div>
+              <input class="field-input" id="sol-h3" value="Découvrez nos solutions pour :" />
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Carte — Family offices</span>
+            <span class="field-group-tag">.solution-card:1</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Titre de carte</div>
+              <input class="field-input" id="sol-card1-title" value="Family offices" />
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Carte — CGP</span>
+            <span class="field-group-tag">.solution-card:2</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Titre de carte</div>
+              <input class="field-input" id="sol-card2-title" value="CGP" />
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Carte — Notaires</span>
+            <span class="field-group-tag">.solution-card:3</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Titre de carte</div>
+              <input class="field-input" id="sol-card3-title" value="Notaires" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ OFFRE ══ -->
+      <div class="section-panel" id="panel-offre">
+        <div class="panel-header">
+          <div class="panel-icon">🎯</div>
+          <div>
+            <div class="panel-title">Offre Pro</div>
+            <div class="panel-desc">Section programme pilote et avantages</div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">En-tête de section</span>
+            <span class="field-group-tag">#Offre .section-header</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Titre H2</div>
+              <input class="field-input" id="offre-h2" value="Notre offre destinée aux professionnels" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Sous-titre</div>
+              <textarea class="field-textarea"
+                id="offre-sub">Equipez vos clients d'un outil digital de suivi patrimonial organisé. Offrez leur une vision globale et hiérarchisée. Accompagnez les dans chacune de leurs décision.</textarea>
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Carte offre</span>
+            <span class="field-group-tag">.offre-card</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Titre H3</div>
+              <textarea class="field-textarea" id="offre-h3"
+                style="min-height:70px">Programme pilote réservé aux professionnels du patrimoine</textarea>
+            </div>
+            <div class="field-item">
+              <div class="field-label">Item 1 — Titre</div>
+              <input class="field-input" id="offre-i1" value="Accès gratuit à la plateforme sur l'année 2026" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Item 2 — Titre</div>
+              <input class="field-input" id="offre-i2" value="Accompagnement sur mesure" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Item 3 — Titre</div>
+              <input class="field-input" id="offre-i3" value="Engagement de co-construction" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Item 4 — Titre</div>
+              <input class="field-input" id="offre-i4" value="Conditions early adopters, sans engagement long terme" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Bouton CTA</div>
+              <input class="field-input" id="offre-btn" value="Demander une démo" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ À PROPOS ══ -->
+      <div class="section-panel" id="panel-apropos">
+        <div class="panel-header">
+          <div class="panel-icon">🏛</div>
+          <div>
+            <div class="panel-title">À propos</div>
+            <div class="panel-desc">Conviction, genèse, souveraineté, ambition & citation</div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Notre conviction</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Titre H3</div>
+              <input class="field-input" id="ap-conv-h" value="Notre conviction" />
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">La genèse</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Titre H3</div>
+              <input class="field-input" id="ap-gen-h" value="La genèse" />
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Souveraineté des données</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Titre H3</div>
+              <input class="field-input" id="ap-sov-h" value="Un principe fondateur : la souveraineté des données" />
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Notre ambition</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Titre H3</div>
+              <input class="field-input" id="ap-amb-h" value="Notre ambition" />
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Citation</span>
+            <span class="field-group-tag">blockquote</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Texte de citation</div>
+              <textarea class="field-textarea"
+                id="quote-text">My Family Dashboard n'est pas un outil supplémentaire. C'est une fondation technologique pour le patrimoine de demain.</textarea>
+            </div>
+            <div class="field-item">
+              <div class="field-label">Nom <span class="tag">.name</span></div>
+              <input class="field-input" id="quote-name" value="François Jubin" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Rôle <span class="tag">.role</span></div>
+              <input class="field-input" id="quote-role" value="CEO - My Family Dashboard" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ CONTACT ══ -->
+      <div class="section-panel" id="panel-contact">
+        <div class="panel-header">
+          <div class="panel-icon">✉️</div>
+          <div>
+            <div class="panel-title">Contact</div>
+            <div class="panel-desc">Titre, sous-titre et email de contact</div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Section contact</span>
+            <span class="field-group-tag">#Contact</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Titre H2</div>
+              <input class="field-input" id="contact-h2" value="Contact" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Sous-titre</div>
+              <textarea class="field-textarea" id="contact-sub"
+                style="min-height:70px">Vous souhaitez en savoir plus sur My Family Dashboard ? N'hésitez pas à nous contacter !</textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ FOOTER ══ -->
+      <div class="section-panel" id="panel-footer">
+        <div class="panel-header">
+          <div class="panel-icon">🔻</div>
+          <div>
+            <div class="panel-title">Footer</div>
+            <div class="panel-desc">Liens de pied de page</div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Liens légaux</span>
+            <span class="field-group-tag">footer .footer-list:2</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Lien 1</div>
+              <input class="field-input" id="footer-legal1" value="Mentions légales" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Lien 2</div>
+              <input class="field-input" id="footer-legal2" value="Politique de confidentialité" />
+            </div>
+            <div class="field-item">
+              <div class="field-label">Lien 3</div>
+              <input class="field-input" id="footer-legal3" value="Cookies" />
+            </div>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-header">
+            <span class="field-group-name">Lien application</span>
+            <span class="field-group-tag">.app a</span>
+          </div>
+          <div class="field-list">
+            <div class="field-item">
+              <div class="field-label">Texte du lien</div>
+              <input class="field-input" id="footer-app" value="Accéder à l'app" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- MODAL PUBLIER -->
+  <div class="modal-overlay" id="publish-modal">
+    <div class="modal">
+      <div class="modal-title">🚀 Publier sur le site</div>
+      <div class="modal-desc">Le HTML sera commité sur GitHub. Amplify redéploiera automatiquement en 1–2 min.</div>
+
+      <div class="config-notice">
+        <span>⚙️</span>
+        <div>Configuration <strong>à remplir une seule fois</strong>. Les valeurs sont sauvegardées localement dans
+          votre navigateur.</div>
+      </div>
+
+      <div class="modal-field">
+        <label class="modal-label" for="cfg-url">URL de l'API Lambda</label>
+        <input class="modal-input" id="cfg-url" type="url"
+          placeholder="https://xxxx.execute-api.eu-west-3.amazonaws.com/publish" />
+      </div>
+      <div class="modal-field">
+        <label class="modal-label" for="cfg-key">Clé API (ADMIN_API_KEY)</label>
+        <input class="modal-input" id="cfg-key" type="password" placeholder="votre-clé-secrète" />
+      </div>
+      <div class="modal-field">
+        <label class="modal-label" for="cfg-msg">Message de commit (optionnel)</label>
+        <input class="modal-input" id="cfg-msg" type="text" placeholder="feat: mise à jour textes hero" />
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closePublishModal()">Annuler</button>
+        <button class="btn-publish" onclick="publish()" id="btn-publish-confirm">Publier maintenant</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">✓ index.html exporté avec succès</div>
+
+  <script>
+    // ── NAVIGATION PANELS ──
+    function showPanel(name, el) {
+      document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+      document.getElementById('panel-' + name).classList.add('active');
+      el.classList.add('active');
+    }
+
+    // ── CHAR COUNT ──
+    function updateCount(el, countId) {
+      const span = document.getElementById(countId);
+      if (span) span.textContent = el.value.length + ' car.';
+    }
+
+    // ── INIT COUNTS ──
+    document.querySelectorAll('textarea[oninput]').forEach(ta => {
+      const countId = ta.getAttribute('oninput').match(/'([^']+)'/)?.[1];
+      if (countId) updateCount(ta, countId);
+    });
+
+    // ── RESET ──
+    const defaults = {};
+    document.querySelectorAll('[id]').forEach(el => {
+      if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+        defaults[el.id] = el.value;
+      }
+    });
+
+    function resetAll() {
+      if (!confirm('Réinitialiser tous les champs ?')) return;
+      Object.entries(defaults).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = val;
+      });
+    }
+
+    // ── TOAST ──
+    function showToast(msg, type = 'success') {
+      const t = document.getElementById('toast');
+      t.textContent = (type === 'success' ? '✓ ' : '✕ ') + msg;
+      t.className = 'toast' + (type === 'error' ? ' error' : '');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 4000);
+    }
+
+    // ── DEPLOY STATUS ──
+    function setStatus(state, label) {
+      const dot = document.getElementById('deploy-dot');
+      const lbl = document.getElementById('deploy-label');
+      dot.className = 'deploy-dot ' + state;
+      lbl.textContent = label;
+    }
+
+    // ── MODAL ──
+    function openPublishModal() {
+      // Pré-remplir depuis localStorage
+      document.getElementById('cfg-url').value = localStorage.getItem('mfd_api_url') || '';
+      document.getElementById('cfg-key').value = localStorage.getItem('mfd_api_key') || '';
+      document.getElementById('cfg-msg').value = '';
+      document.getElementById('publish-modal').classList.add('open');
+    }
+
+    function closePublishModal() {
+      document.getElementById('publish-modal').classList.remove('open');
+    }
+
+    // Fermer en cliquant en dehors
+    document.getElementById('publish-modal').addEventListener('click', function (e) {
+      if (e.target === this) closePublishModal();
+    });
+
+    // ── GET VALUE ──
+    function v(id) {
+      const el = document.getElementById(id);
+      return el ? el.value : '';
+    }
+
+    // ── PUBLISH ──
+    async function publish() {
+      const apiUrl = document.getElementById('cfg-url').value.trim();
+      const apiKey = document.getElementById('cfg-key').value.trim();
+      const commitMsg = document.getElementById('cfg-msg').value.trim();
+
+      if (!apiUrl) { showToast('Renseignez l\'URL de l\'API Lambda', 'error'); return; }
+      if (!apiKey) { showToast('Renseignez la clé API', 'error'); return; }
+
+      // Sauvegarder config
+      localStorage.setItem('mfd_api_url', apiUrl);
+      localStorage.setItem('mfd_api_key', apiKey);
+
+      const btn = document.getElementById('btn-publish-confirm');
+      btn.disabled = true;
+      btn.textContent = 'Publication…';
+      setStatus('loading', 'Publication…');
+      closePublishModal();
+
+      const html = buildHTML();
+
+      try {
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Api-Key': apiKey,
+          },
+          body: JSON.stringify({
+            html,
+            commitMessage: commitMsg || 'chore: mise à jour via admin MFD',
+          }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          setStatus('ok', 'Publié · Amplify en cours…');
+          showToast('Commit envoyé ! Amplify redéploie dans ~1 min');
+        } else {
+          throw new Error(data.error || `HTTP ${res.status}`);
+        }
+      } catch (err) {
+        setStatus('err', 'Erreur');
+        showToast('Erreur : ' + err.message, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Publier maintenant';
+      }
+    }
+
+    // ── EXPORT ──
+    function exportHTML() {
+      const blob = new Blob([buildHTML()], { type: 'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'index.html';
+      a.click();
+      showToast('index.html exporté avec succès');
+    }
+
+    function buildHTML() {
+      return `<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Family Dashboard</title>
+  <link rel="icon" type="image/svg+xml" href="Images/Logo-MFD-colored.svg" media="(prefers-color-scheme: light)" />
+  <link rel="icon" type="image/svg+xml" href="Images/Logo-MFD-white.svg" media="(prefers-color-scheme: dark)" />
+  <script src="https://unpkg.com/scrollreveal"><\/script>
+  <script src="script.js"><\/script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="style.css?v=2">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+</head>
+
+<body>
+  <div class="page">
+
+    <!-- ── NAVBAR ── -->
+    <nav>
+      <a href="#" class="logo"><img src="Images/Logo-MFD-colored.svg" alt=""></a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+      <label for="nav-toggle" class="nav-toggle-label" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <ul class="nav-links">
+        <li><a href="#" class="active">${v('nav-home')}</a></li>
+        <li><a href="#Solution">${v('nav-solution')}</a></li>
+        <li><a href="#Offre">${v('nav-offre')}</a></li>
+        <li><a href="#Propos">${v('nav-propos')}</a></li>
+        <li><a href="#Contact">${v('nav-contact')}</a></li>
+      </ul>
+      <a href="https://app.myfamilydashboard.com" target="_blank" class="btn-nav">
+        ${v('nav-cta')}
+      </a>
+    </nav>
+
+    <div class="sections">
+
+      <!-- ════════════════════════════════════════
+         1. HERO
+    ════════════════════════════════════════ -->
+      <div class="hero-wrap reveal">
+
+        <!-- Hero Card -->
+        <div class="hero-card">
+          <div class="noise"></div>
+          <div class="blob blob-left"></div>
+          <div class="blob blob-right"></div>
+
+          <!-- Company tags -->
+          <div class="company-tags">
+            <div class="company-tag"><div class="dot"></div>${v('tag1')}</div>
+            <div class="company-tag"><div class="dot"></div>${v('tag2')}</div>
+            <div class="company-tag"><div class="dot"></div>${v('tag3')}</div>
+            <div class="company-tag"><div class="dot"></div>${v('tag4')}</div>
+            <div class="company-tag"><div class="dot"></div>${v('tag5')}</div>
+          </div>
+
+          <!-- Image + text -->
+          <div class="image-text">
+            <div class="hero-image">
+              <img src="Images/Photo/Hero.png" alt="Hero image" />
+            </div>
+
+            <!-- Side icons (decorative) -->
+            <div class="side-icons">
+              <div class="icon-box"><i class="ph ph-buildings"></i></div>
+              <div class="icon-box"><i class="ph ph-user-circle"></i></div>
+              <div class="icon-box"><i class="ph ph-chart-line"></i></div>
+              <div class="icon-box"><i class="ph ph-shield-check"></i></div>
+              <div class="icon-box"><i class="ph ph-gear"></i></div>
+            </div>
+
+            <div class="hero-content">
+              <h1 class="hero-h1">${v('hero-h1')}</h1>
+              <p class="hero-p">${v('hero-p')}</p>
+              <div class="hero-cta">
+                <button id="btn-demo" class="btn-primary">${v('hero-btn')}</button>
+                <div id="dropdown-menu" class="dropdown-content">
+                  <a href="#Contact">Nous contacter</a>
+                  <div class="separator"></div>
+                  <a href="https://schedule.fillout.com/t/d2Ms54V8C2us" target="_blank">Prendre
+                    rendez-vous <i class="ph ph-arrow-up-right"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Graph -->
+          <div class="graph-area">
+            <img src="Images/Graph.svg" alt="Performance graph" />
+          </div>
+        </div>
+
+        <!-- Features row -->
+        <div class="features-row">
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <div class="feature-text">
+              <p class="feature-title">${v('feat1-title')}</p>
+              <p class="feature-desc">${v('feat1-desc')}</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <div class="feature-text">
+              <p class="feature-title">${v('feat2-title')}</p>
+              <p class="feature-desc">${v('feat2-desc')}</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-dot"></div>
+            <div class="feature-text">
+              <p class="feature-title">${v('feat3-title')}</p>
+              <p class="feature-desc">${v('feat3-desc')}</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /hero-wrap -->
+
+      <!-- ════════════════════════════════════════
+         2. SOLUTION
+    ════════════════════════════════════════ -->
+      <div class="solution-wrap" id="Solution">
+        <div class="section-header">
+          <h2>${v('sol-h2')}</h2>
+          <p class="section-sub">${v('sol-sub')}</p>
+        </div>
+
+        <h3>${v('sol-h3')}</h3>
+
+        <div class="solution-cards">
+          <div class="solution-card">
+            <div class="noise"></div>
+            <div class="solution-card-grain"></div>
+            <div class="solution-card-header">
+              <span class="solution-card-title">${v('sol-card1-title')}</span>
+            </div>
+            <div class="solution-card-desc">
+              <ul>
+                <li><span class="dot8"></span><strong>Piloter l'ensemble des actifs</strong> d'un ou plusieurs patrimoines complexes (immobilier, sociétés, placements privés, œuvres d'art, assurances, trusts).</li>
+                <li><span class="dot8"></span><strong>Coordonner les actions des professionnels</strong> (notaire, avocat, CGP, expert-comptable).</li>
+              </ul>
+              <ul>
+                <li><span class="dot8"></span><strong>Produire une vision synthétique dynamique</strong> pour le family member / bénéficiaire.</li>
+                <li><span class="dot8"></span><strong>Gérer l'équilibre</strong> entre confidentialité, gouvernance familiale, reporting et transmission.</li>
+              </ul>
+            </div>
+            <div class="solution-card-icon"><img src="Images/Icon/Family Office.svg" alt="" /></div>
+          </div>
+          <div class="solution-card">
+            <div class="noise"></div>
+            <div class="solution-card-grain"></div>
+            <div class="solution-card-header">
+              <span class="solution-card-title">${v('sol-card2-title')}</span>
+            </div>
+            <div class="solution-card-desc">
+              <ul>
+                <li><span class="dot8"></span><strong>Comprendre le profil patrimonial global du client</strong> (actifs, passifs, flux, structures).</li>
+                <li><span class="dot8"></span><strong>Identifier des opportunités</strong> d'optimisation financière, fiscale et successorale.</li>
+              </ul>
+              <ul>
+                <li><span class="dot8"></span><strong>Préparer les rendez-vous de conseil</strong> et produire des rapports patrimoniaux.</li>
+                <li><span class="dot8"></span><strong>Suivre les engagements clients</strong> dans le temps (allocation, données fiscales, contrats).</li>
+              </ul>
+            </div>
+            <div class="solution-card-icon"><img src="Images/Icon/CGP.svg" alt="" /></div>
+          </div>
+          <div class="solution-card">
+            <div class="noise"></div>
+            <div class="solution-card-grain"></div>
+            <div class="solution-card-header">
+              <span class="solution-card-title">${v('sol-card3-title')}</span>
+            </div>
+            <div class="solution-card-desc">
+              <ul>
+                <li><span class="dot8"></span><strong>Préparer et fiabiliser</strong> les actes successoraux, donation, PACS, divorce, mariage, SCI/transmission.</li>
+                <li><span class="dot8"></span><strong>Collecter les informations patrimoniales documentées</strong> sans échange papier.</li>
+              </ul>
+              <ul>
+                <li><span class="dot8"></span><strong>Modéliser les liens</strong> familiaux, usufruit, indivision, SCI/SCP, démembrement.</li>
+                <li><span class="dot8"></span><strong>Suivre les évolutions patrimoniales</strong> pour anticiper les opérations juridiques.</li>
+              </ul>
+            </div>
+            <div class="solution-card-icon"><img src="Images/Icon/Notaire.svg" alt="" /></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════
+         3. OFFRE PRO
+    ════════════════════════════════════════ -->
+      <div class="offre-wrap" id="Offre">
+        <div class="section-header">
+          <h2>${v('offre-h2')}</h2>
+          <p class="section-sub">${v('offre-sub')}</p>
+        </div>
+        <div class="offre-card">
+          <div class="noise"></div>
+          <div class="offre-left">
+            <h3>${v('offre-h3')}</h3>
+            <div class="offre-icons">
+              <div class="container-offre-icons">
+                <img src="Images/Icon/Family Office.svg" alt="Family Office" />
+                <img src="Images/Icon/Notaire.svg" alt="Notaire" />
+                <img src="Images/Icon/CGP.svg" alt="CGP" />
+              </div>
+            </div>
+            <div class="offre-list">
+              <div class="offre-list-item">
+                <div class="offre-list-head"><span class="dot8"></span><strong>${v('offre-i1')}</strong></div>
+                <div class="offre-list-sub">
+                  <p>Création de l'environnement du Family Office et ses collaborateurs</p>
+                  <p>Gestion des dossiers clients</p>
+                </div>
+              </div>
+              <div class="offre-list-item">
+                <div class="offre-list-head"><span class="dot8"></span><strong>${v('offre-i2')}</strong></div>
+                <div class="offre-list-sub">
+                  <p>Session d'onboarding</p>
+                  <p>Aide à la structuration des premiers dossiers patrimoniaux</p>
+                </div>
+              </div>
+              <div class="offre-list-item">
+                <div class="offre-list-head"><span class="dot8"></span><strong>${v('offre-i3')}</strong></div>
+                <div class="offre-list-sub">
+                  <p>Points de suivi mensuels</p>
+                  <p>Recueil des retours terrain</p>
+                  <p>Possibilité d'influencer la roadmap produit</p>
+                </div>
+              </div>
+              <div class="offre-list-item">
+                <div class="offre-list-head"><span class="dot8"></span><strong>${v('offre-i4')}</strong></div>
+              </div>
+            </div>
+            <div class="offre-dropdown">
+              <button class="btn-ghost" id="btn-demo-2">${v('offre-btn')}</button>
+              <div id="dropdown-menu-2" class="dropdown-content">
+                <a href="#Contact">Nous contacter</a>
+                <div class="separator"></div>
+                <a href="https://schedule.fillout.com/t/d2Ms54V8C2us" target="_blank">Prendre rendez-vous <i class="ph ph-arrow-up-right"></i></a>
+              </div>
+            </div>
+          </div>
+          <div class="offre-photo">
+            <img src="/Images/Photo/Offre pilote.png" alt="Offre pilote" />
+          </div>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════
+         4. A PROPOS
+    ════════════════════════════════════════ -->
+      <div class="apropos-wrap" id="Propos">
+        <div class="apropos-intro">
+          <h2>A propos</h2>
+          <div class="apropos-arrow"><img src="Images/Icon/a-propos.png" alt=""></div>
+        </div>
+        <div class="apropos-block">
+          <div class="apropos-text">
+            <h3>${v('ap-conv-h')}</h3>
+            <p>Le patrimoine des familles s'est complexifié. Les structures juridiques se multiplient, les actifs se diversifient, les interlocuteurs se spécialisent. Pourtant, l'infrastructure de pilotage reste fragmentée.</p>
+            <p>Les professionnels du patrimoine doivent composer avec une donnée éclatée, hétérogène, rarement consolidée dans une architecture cohérente. Cette fragmentation limite la vision stratégique et freine l'industrialisation du conseil à haute valeur ajoutée.</p>
+            <p>Nous sommes convaincus qu'une nouvelle génération d'outils est nécessaire : non pas des logiciels centrés sur le produit, mais une <strong>infrastructure pensée pour le pilotage patrimonial global</strong>.</p>
+          </div>
+          <div class="apropos-img"><img src="Images/Image/Conviction.png" alt="Notre conviction" /></div>
+        </div>
+        <div class="apropos-block">
+          <div class="apropos-img apropos-img-horizontal"><img src="Images/Image/Genese.png" alt="La genèse" /></div>
+          <div class="apropos-text">
+            <h3>${v('ap-gen-h')}</h3>
+            <p>My Family Dashboard est né de cette ambition : créer un socle technologique indépendant capable de modéliser le patrimoine dans sa réalité juridique, financière et humaine.</p>
+            <p>Dès l'origine, nous avons conçu la plateforme comme :</p>
+            <ul>
+              <li>un moteur de structuration multi-entités,</li>
+              <li>un outil de consolidation transverse,</li>
+              <li>un environnement collaboratif sécurisé entre professionnels et familles,</li>
+              <li>une architecture évolutive capable d'accompagner le cycle de vie patrimonial.</li>
+            </ul>
+          </div>
+          <div class="apropos-img apropos-img-vertical"><img src="Images/Image/Genese.png" alt="La genèse" /></div>
+        </div>
+        <div class="apropos-block">
+          <div class="apropos-text">
+            <h3>${v('ap-sov-h')}</h3>
+            <p>Nous avons fait un choix structurant : l'utilisateur final demeure propriétaire de son espace et de ses données. Chaque famille dispose de son environnement dédié.</p>
+            <p>Le professionnel intervient avec des droits d'accès définis, dans un cadre transparent.</p>
+            <p>Ce modèle renforce la confiance, pérennise la relation et repositionne le professionnel dans son rôle essentiel : stratège et architecte patrimonial.</p>
+          </div>
+          <div class="apropos-img"><img src="Images/Image/Souverainete.png" alt="Souveraineté des données" /></div>
+        </div>
+        <div class="apropos-block">
+          <div class="apropos-img apropos-img-horizontal"><img src="Images/Image/Ambition.png" alt="Notre ambition" /></div>
+          <div class="apropos-text">
+            <h3>${v('ap-amb-h')}</h3>
+            <p>Devenir l'infrastructure de référence pour les professionnels du patrimoine souhaitant :</p>
+            <ul>
+              <li>structurer des patrimoines complexes,</li>
+              <li>élever leur niveau de reporting,</li>
+              <li>sécuriser la transmission d'information,</li>
+              <li>inscrire leur pratique dans une logique durable et indépendante.</li>
+            </ul>
+          </div>
+          <div class="apropos-img apropos-img-vertical"><img src="Images/Image/Ambition.png" alt="Notre ambition" /></div>
+        </div>
+        <div class="quote-banner">
+          <div class="noise"></div>
+          <img class="quote-mark open" src="Images/Icon/quote-left.png" alt="">
+          <img class="quote-mark close" src="Images/Icon/quote-right.png" alt="">
+          <div class="quote-content">
+            <div class="quote-text">
+              <blockquote>${v('quote-text')}</blockquote>
+              <div class="quote-attribution">
+                <p class="name">${v('quote-name')}</p>
+                <p class="role">${v('quote-role')}</p>
+              </div>
+            </div>
+            <div class="quote-photo"><img src="/Images/Photo/FJ.png" alt="${v('quote-name')}" /></div>
+          </div>
+        </div>
+      </div><!-- /apropos-wrap -->
+
+      <div class="contact-wrap" id="Contact">
+        <div class="section-header">
+          <h2>${v('contact-h2')}</h2>
+          <p class="section-sub">${v('contact-sub')}</p>
+        </div>
+        <div class="contact-content">
+          <div class="contact-info">
+            <img src="Images/Icon/Mail.png" alt="">
+            <div class="contact-email"><a title="Cliquer pour copier"><span class="__cf_email__" data-cfemail="fd9e9293899c9e89bd90849b9c90949184999c8e959f929c8f99d39e9290">[email&#160;protected]</span> <i class="ph ph-copy"></i></a>
+              <div id="alert" class="alert">Adresse copiée !</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /sections -->
+  </div><!-- /page -->
+
+  <footer>
+    <div class="noise"></div>
+    <div class="blob blob-left"></div>
+    <div class="blob blob-right"></div>
+    <div class="footer-lists">
+      <div class="footer-list">
+        <ul>
+          <li><a href="#">${v('nav-home')}</a></li>
+          <li><a href="#Solution">${v('nav-solution')}</a></li>
+          <li><a href="#Offre">${v('nav-offre')}</a></li>
+          <li><a href="#Propos">${v('nav-propos')}</a></li>
+          <li><a href="#Contact">${v('nav-contact')}</a></li>
+        </ul>
+      </div>
+      <div class="footer-list">
+        <ul>
+          <li><a href="#">${v('footer-legal1')}</a></li>
+          <li><a href="#">${v('footer-legal2')}</a></li>
+          <li><a href="#">${v('footer-legal3')}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-logo">
+      <a href="#"><img src="Images/Logo-MFD-colored.svg" alt="My Family Dashboard logo"></a>
+    </div>
+    <div class="footer-other">
+      <div class="social-networks">
+        <a href="https://www.linkedin.com/in/fran%C3%A7ois-jubin-40774a6/" target="_blank"><img src="Images/Icon/Linkedin.svg" style="width: 24px; height: auto;" alt=""></a>
+      </div>
+      <div class="app">
+        <a href="https://app.myfamilydashboard.com" target="_blank">${v('footer-app')} <i class="ph ph-arrow-up-right"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"><\/script>
+  <script>
+    function setupDropdown(btnId, menuId) {
+      const btn = document.getElementById(btnId);
+      const menu = document.getElementById(menuId);
+      btn.addEventListener("click", function(e) {
+        e.stopPropagation();
+        menu.classList.toggle("active");
+      });
+    }
+    setupDropdown("btn-demo", "dropdown-menu");
+    setupDropdown("btn-demo-2", "dropdown-menu-2");
+    document.addEventListener("click", function() {
+      document.querySelectorAll(".dropdown-content").forEach(menu => menu.classList.remove("active"));
+    });
+    document.querySelector(".contact-email a").addEventListener("click", function(e) {
+      e.preventDefault();
+      navigator.clipboard.writeText("contact@myfamilydashboard.com").then(function() {
+        const alert = document.getElementById("alert");
+        alert.style.opacity = "1";
+        setTimeout(() => { alert.style.opacity = "0"; }, 2000);
+      });
+    });
+  <\/script>
+
+</body>
+</html>`;
+    }
+  </script>
+
+</body>
+
+</html>
