@@ -1,6 +1,12 @@
-ScrollReveal().reveal('.reveal');
+const sr = ScrollReveal({
+    distance: '50px',
+    duration: 800,
+    easing: 'ease-in-out',
+    origin: 'bottom',
+    reset: false
+});
 
-
+sr.reveal('.reveal');
 
 const sections = document.querySelectorAll('#Solution, #Offre, #Propos, #Contact');
 const navLinks = document.querySelectorAll('.nav-links a');
