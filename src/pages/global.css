@@ -113,6 +113,7 @@ a {
     gap: 8px;
 
     width: fit-content;
+    white-space: nowrap;
     cursor: pointer;
 }
 
@@ -195,6 +196,7 @@ a {
     top: -20%;
     left: -22%;
     width: 100vw;
+    max-width: none;
     height: calc(100% + var(--header-height));
     object-fit: cover;
     object-position: right;
@@ -269,6 +271,7 @@ a {
     top: -0;
     left: 0;
     width: 120vw;
+    max-width: none;
     height: 100%;
     object-fit: cover;
     object-position: center;
@@ -370,6 +373,7 @@ a {
     bottom: 0%;
     right: -10%;
     width: 120%;
+    max-width: none;
     height: 100%;
     object-fit: cover;
     object-position: center;
@@ -397,6 +401,7 @@ a {
     position: absolute;
     top: 0;
     width: 100vw;
+    max-width: none;
     left: 0;
 }
 
@@ -758,6 +763,11 @@ a {
     justify-content: center;
 }
 
+.ambition-card .container-image img {
+    width: 80px;
+    max-width: none;
+}
+
 .ambition-card h4 {
     height: fit-content;
 }
@@ -838,9 +848,21 @@ a {
     rotate: 180deg;
 }
 
+@media (max-width: 480px) {
+    .citation-container .quote2 {
+        right: -25%;
+    }
+}
+
 /* CONTACT PAGE*/
 .contact-hero {
     padding: 0 40px;
+}
+
+@media (max-width : 480px) {
+    .contact-hero {
+        padding: 0 24px;
+    }
 }
 
 .contact-hero .title-container {
@@ -930,7 +952,11 @@ a {
 }
 
 .contact-container .email-content .email {
-    font-size: 24px;
+    font-size: clamp(13px, 4vw, 24px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
 }
 
 /* RESPONSIVE < 1024px */
@@ -991,6 +1017,8 @@ a {
     .contact-container .email-container {
         order: -1;
     }
+
+
 
     .donnees-container,
     .connexions-container {
@@ -1094,6 +1122,11 @@ a {
         margin: 0 24px;
     }
 
+    .hero .content-container .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
     .kpi,
     .solution,
     .solution .solution-container,
@@ -1117,4 +1150,11 @@ a {
     }
 
 
+    .contact-container .email-container {
+        padding: 24px;
+    }
+
+    .contact-container .email-content {
+        padding: 24px;
+    }
 }
