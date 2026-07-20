@@ -1,0 +1,16 @@
+---
+interface Props {
+    icon: string;
+    title: string;
+}
+
+const { icon, title } = Astro.props;
+---
+
+<article class="securite-kpi-card">
+    <img src={icon} alt="" class="icon" />
+    <div class="content-container">
+        <h4>{title}</h4>
+        <p><slot /></p>
+    </div>
+</article>

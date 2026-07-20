@@ -1,17 +1,275 @@
 ---
-
+import Layout from "./layout.astro";
+import Offre from "./Components/offre.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+    <!-- HERO SECTION -->
+    <div class="wrapper">
+        <section class="hero">
+            <div class="content-container">
+                <div class="icons-row">
+                    <img src="../../public/icons-row.svg" />
+                </div>
+                <h1>
+                    La plateforme pensée pour <span
+                        >les professionnels du patrimoine et leurs clients</span
+                    >
+                </h1>
+                <p class="subtitle">
+                    MFD n'est pas un CRM ni un outil de distribution financière
+                    : c'est une infrastructure patrimoniale conçue pour
+                    structurer le dialogue entre le professionnel et son client.
+                </p>
+                <div class="button-container">
+                    <a
+                        class="btn btn-tertiary"
+                        href="https://schedule.fillout.com/t/d2Ms54V8C2us"
+                        target="_blank"
+                        >Demander une démo<i class="ph ph-arrow-up-right"
+                        ></i></a
+                    >
+                </div>
+            </div>
+            <img
+                src="../../public/hero-background.svg"
+                alt=""
+                class="background-image"
+            />
+        </section>
+    </div>
+
+    <!-- KPI Section -->
+    <section class="kpi">
+        <div class="wrapper">
+            <h3>My Family Dashboard en <span>3 points clés</span> :</h3>
+            <div class="kpi-cards">
+                <article class="kpi-card">
+                    <div class="img-container">
+                        <img src="../../public/rocket.svg" alt="" />
+                    </div>
+                    <h4>Productivité et fiabilité</h4>
+                    <p>
+                        Intégration et structuration des données patrimoniales
+                        dans une base unique.
+                    </p>
+                </article>
+                <article class="kpi-card">
+                    <div class="img-container">
+                        <img src="../../public/speedometer.svg" alt="" />
+                    </div>
+                    <h4>Cockpit patrimonial sécurisé</h4>
+                    <p>
+                        Vision 360° du patrimoine : actifs financiers,
+                        immobilier, non coté, passifs, engagements, structures
+                        juridiques.
+                    </p>
+                </article>
+                <article class="kpi-card">
+                    <div class="img-container">
+                        <img src="../../public/cube.svg" alt="" />
+                    </div>
+                    <h4>Augmentation métier du Family Office</h4>
+                    <p>
+                        Support structurant pour un dialogue client orienté
+                        objectifs, arbitrages et stratégie long terme.
+                    </p>
+                </article>
+            </div>
+        </div>
+        <img src="kpi-background.svg" alt="" class="background-image" />
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution">
+        <div class="solution-container wrapper">
+            <div class="solution-title">
+                <p class="surtitle">Notre solution</p>
+                <h2>Pour chaque professionnel</h2>
+                <p>
+                    Les Multi Family Office opèrent dans un environnement à très
+                    forte complexité patrimoniale, avec des exigences élevées de
+                    personnalisation, de fiabilité et de confidentialité.
+                    Pourtant, leurs outils restent souvent hétérogènes et peu
+                    adaptés à cette réalité.
+                </p>
+            </div>
+            <div class="solution-cards">
+                <article class="solution-card">
+                    <div class="img-container">
+                        <img src="../../public/users.svg" alt="" />
+                    </div>
+                    <h4>Family Offices</h4>
+                    <ul>
+                        <li>
+                            Piloter l’ensemble des actifs d’un ou plusieurs
+                            patrimoines complexes (immobilier, sociétés,
+                            placements privés, œuvres d’art, assurances,
+                            trusts).
+                        </li>
+                        <li>
+                            Coordonner les actions des professionnels (notaire,
+                            avocat, CGP, expert-comptable).
+                        </li>
+                        <li>
+                            Produire une vision synthétique dynamique pour le
+                            family member / bénéficiaire.
+                        </li>
+                        <li>
+                            Gérer l’équilibre entre confidentialité, gouvernance
+                            familiale, reporting et transmission.
+                        </li>
+                    </ul>
+                </article>
+                <article class="solution-card">
+                    <div class="img-container">
+                        <img src="../../public/chartbar.svg" alt="" />
+                    </div>
+                    <h4>CGP</h4>
+                    <ul>
+                        <li>
+                            Comprendre le profil patrimonial global du client
+                            (actifs, passifs, flux, structures).
+                        </li>
+                        <li>
+                            Identifier des opportunités d’optimisation
+                            financière, fiscale et successorale.
+                        </li>
+                        <li>
+                            Préparer les rendez-vous de conseil et produire des
+                            rapports patrimoniaux.
+                        </li>
+                        <li>
+                            Suivre les engagements clients dans le temps
+                            (allocation, données fiscales, contrats).
+                        </li>
+                    </ul>
+                </article>
+                <article class="solution-card">
+                    <div class="img-container">
+                        <img src="../../public/house.svg" alt="" />
+                    </div>
+                    <h4>Notaires</h4>
+                    <ul>
+                        <li>
+                            Préparer et fiabiliser les actes successoraux,
+                            donation, PACS, divorce, mariage, SCI/transmission.
+                        </li>
+                        <li>
+                            Collecter les informations patrimoniales documentées
+                            sans échange papier.
+                        </li>
+                        <li>
+                            Modéliser les liens familiaux, usufruit, indivision,
+                            SCI/SCP, démembrement.
+                        </li>
+                        <li>
+                            Suivre les évolutions patrimoniales pour anticiper
+                            les opérations juridiques.
+                        </li>
+                    </ul>
+                </article>
+            </div>
+            <img
+                src="../../public/solution-background.svg"
+                alt=""
+                class="background-image"
+            />
+        </div>
+    </section>
+
+    <!-- Données & Connexions Section -->
+    <section class="donnees-connexions">
+        <div class="donnees-container wrapper">
+            <div class="col1">
+                <h2>Vos <span>données</span> sont protégées...</h2>
+                <p class="subtitle">
+                    MFD est conçu pour les familles qui ne font aucun compromis
+                    sur la confidentialité. Chaque décision d’infrastructure a
+                    été prise avec une priorité essentielle : la sécurité de vos
+                    données.
+                </p>
+                <div class="donnees-cards">
+                    <article class="donnees-card">
+                        <h4>Données en Europe</h4>
+                        <img
+                            src="../../public/europe.png"
+                            alt=""
+                            class="icon"
+                        />
+                    </article>
+                    <article class="donnees-card">
+                        <h4>Traçabilité complète</h4>
+                        <img src="../../public/notes.png" alt="" class="icon" />
+                    </article>
+                    <article class="donnees-card">
+                        <h4>Isolation garantie</h4>
+                        <img
+                            src="../../public/verrou.png"
+                            alt=""
+                            class="icon"
+                        />
+                    </article>
+                    <article class="donnees-card">
+                        <h4>Protection anti intrusions</h4>
+                        <img
+                            src="../../public/bouclier.png"
+                            alt=""
+                            class="icon"
+                        />
+                    </article>
+                    <article class="donnees-card">
+                        <h4>Chiffrement de bout en bout</h4>
+                        <img src="../../public/cle.png" alt="" class="icon" />
+                    </article>
+                    <article class="donnees-card">
+                        <h4>Contrôle des accès familiaux</h4>
+                        <img src="../../public/yeux.png" alt="" class="icon" />
+                    </article>
+                </div>
+                <a href="securite"
+                    >En savoir plus <i class="ph ph-arrow-right"></i></a
+                >
+            </div>
+            <div class="col2">
+                <img
+                    class="donnees-background-image"
+                    src="../../public/donnees-image.svg"
+                    alt=""
+                />
+            </div>
+        </div>
+        <div class="connexions-container wrapper">
+            <div class="col1">
+                <h2>... vos <span>connexions</span> aussi</h2>
+                <p class="subtitles">
+                    Nous travaillons avec LINXO pour toutes vos connexions à vos
+                    établissements. LINXO est un établissement de paiement agréé
+                    par l'Autorité de Contrôle Prudentiel et de Résolution
+                    (ACPR, adossée à la Banque de France) pour les services
+                    d'initiation de paiement et pour les services d'information
+                    sur les comptes.
+                </p>
+                <img src="../../public/linxo.png" alt="" class="logo-linxo" />
+                <a href="securite"
+                    >En savoir plus <i class="ph ph-arrow-right"></i></a
+                >
+            </div>
+            <div class="col2">
+                <img
+                    src="connexions-image.svg"
+                    alt=""
+                    class="connexions-background-image"
+                />
+            </div>
+        </div>
+        <img
+            class="background-image"
+            src="../../public/donnees-connexions-background.svg"
+            alt=""
+        />
+    </section>
+
+    <!-- Offer Section -->
+    <Offre />
+</Layout>

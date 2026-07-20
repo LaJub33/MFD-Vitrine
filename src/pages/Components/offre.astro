@@ -1,0 +1,176 @@
+---
+
+---
+
+<section class="offre">
+    <div class="offre-container wrapper">
+        <div class="offre-title">
+            <p class="surtitle">Notre offre</p>
+            <h2>Construisons ensemble</h2>
+            <p class="subtitle">
+                Equipez vos clients d’un outil digital de suivi patrimonial
+                organisé. Offrez leur une vision globale et hiérarchisée.
+                Accompagnez les dans chacune de leurs décision
+            </p>
+        </div>
+        <div class="offre-cards">
+            <article class="offre-card">
+                <div class="bubble"></div>
+                <h4>Accès gratuit pendant la phase pilote</h4>
+                <ul>
+                    <li>
+                        Création de l'environnement du Family Office et ses
+                        collaborateurs
+                    </li>
+                    <li>Gestion des dossiers clients</li>
+                </ul>
+            </article>
+            <article class="offre-card">
+                <div class="bubble"></div>
+                <h4>Accompagnement sur mesure</h4>
+                <ul>
+                    <li>Session d'onboarding</li>
+                    <li>
+                        Aide à la structuration des premiers dossiers
+                        patrimoniaux
+                    </li>
+                </ul>
+            </article>
+            <article class="offre-card">
+                <div class="bubble"></div>
+                <h4>Co-construction de la plateforme</h4>
+                <ul>
+                    <li>Points de suivi mensuels</li>
+                    <li>Recueil des retours terrain</li>
+                    <li>Possibilité d'influencer la roadmap produit</li>
+                </ul>
+            </article>
+        </div>
+        <div class="offre-bouton-container">
+            <a
+                class="btn btn-primary"
+                href="https://schedule.fillout.com/t/d2Ms54V8C2us"
+                target="_blank"
+                >Demander une démo<i class="ph ph-arrow-up-right"></i></a
+            >
+            <p class="subtitle">
+                Conditions early-adopters sans engagement long terme
+            </p>
+        </div>
+    </div>
+    <img
+        src="../../public/offre-background.svg"
+        alt=""
+        class="background-image"
+    />
+</section>
+
+<style>
+    .offre {
+        background-color: var(--primary);
+        padding: 80px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .offre-container {
+        padding: 80px 40px;
+        border-radius: 8px;
+        background: var(--white);
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .offre-title {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .offre-title p {
+        max-width: 600px;
+        text-align: left;
+    }
+
+    .offre-cards {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+    }
+
+    .offre-card {
+        width: 100%;
+        padding: 24px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        height: fit-content;
+    }
+
+    .offre-card .bubble {
+        content: "";
+        height: 24px;
+        width: 24px;
+        border-radius: 100%;
+        background: radial-gradient(
+            circle at bottom right,
+            #ffffff -15%,
+            #0066ff 100%
+        );
+        margin: auto;
+    }
+    .offre-card ul {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 0;
+    }
+
+    .offre-card li {
+        list-style: none;
+    }
+
+    .offre-bouton-container {
+        objectalign: center;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: center;
+    }
+
+    .offre .background-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100vw;
+        z-index: 0;
+    }
+
+    @media (max-width: 1024px) {
+        .offre {
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+
+        .offre-cards {
+            flex-direction: column;
+            gap: 40px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .offre-container {
+            padding: 24px;
+            padding-top: 40px;
+        }
+
+        .offre-title {
+            text-align: center;
+        }
+    }
+</style>

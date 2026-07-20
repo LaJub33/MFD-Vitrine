@@ -1,0 +1,190 @@
+---
+import Layout from "./layout.astro";
+import Offre from "./Components/offre.astro";
+import FaqItem from "./Components/FaqItem.astro";
+import SecuriteKpiCard from "./Components/SecuriteKpiCard.astro";
+---
+
+<Layout>
+    <!-- Hero Section -->
+    <section class="securite-hero wrapper">
+        <h1>
+            La <span> sécurité et la protection de vos données</span> sont les points
+            clés de MFD
+        </h1>
+        <div class="image-container">
+            <img
+                src="../../public/securite-hero-background.svg"
+                alt="Sécurité des données"
+            />
+        </div>
+    </section>
+
+    <!-- KPIs    -->
+    <section class="securite-kpi">
+        <div class="securite-kpi-cards wrapper">
+            <SecuriteKpiCard
+                icon="../../public/europe.png"
+                title="Données en Europe"
+            >
+                Toutes vos données sont hébergées en France, sur des serveurs
+                Scaleway à Paris. Cette architecture garantit une conformité
+                totale au RGPD et vous assure une souveraineté complète sur vos
+                informations patrimoniales.
+            </SecuriteKpiCard>
+            <SecuriteKpiCard
+                icon="../../public/notes.png"
+                title="Traçabilité complète"
+            >
+                Logs d’audit sur toutes les actions sensibles. Vous savez qui a
+                accédé à quoi et quand.
+            </SecuriteKpiCard>
+            <SecuriteKpiCard
+                icon="../../public/verrou.png"
+                title="Isolation garantie"
+            >
+                Row Level Security au niveau base de données - vos données sont
+                strictement isolées de celles de toute autre famille.
+            </SecuriteKpiCard>
+            <SecuriteKpiCard
+                icon="../../public/bouclier.png"
+                title="Protection anti-intrusion"
+            >
+                Rate limiting, validation des fichiers, vérification des mots de
+                passe contre les bases de fuites connues (HIBP).
+            </SecuriteKpiCard>
+            <SecuriteKpiCard
+                icon="../../public/cle.png"
+                title="Chiffrement de bout en bout"
+            >
+                Communications HTTPS, mots de passe hashés bcrypt,
+                authentification JWT avec refresh tokens sécurisés.
+            </SecuriteKpiCard>
+            <SecuriteKpiCard
+                icon="../../public/yeux.png"
+                title="Contrôle des accès familiaux"
+            >
+                Vous définissez précisément qui dans votre famille accès à
+                quelles données, avec gestion fine des droits.
+            </SecuriteKpiCard>
+        </div>
+    </section>
+
+    <!-- Partenaire Linxo -->
+    <section class="securite-donnees">
+        <div class="securite-donnees-container wrapper">
+            <div class="title-container">
+                <p class="surtitle">sécurité de vos données</p>
+                <h2>Notre partenaire, Linxo</h2>
+                <p class="subtitle">
+                    LINXO est un établissement de paiement agréé par l'Autorité
+                    de Contrôle Prudentiel et de Résolution (ACPR, adossée à la
+                    Banque de France) pour les services d'initiation de paiement
+                    et pour les services d'information sur les comptes.
+                </p>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h3>Des accès sécurisés</h3>
+                    <p>
+                        Vous êtes la seule personne pouvant accéder à vos
+                        comptes grâce au portail Linxo. Toutes les connexions
+                        entre My Family Dashboard et Linxo sont chiffrées,
+                        cloisonnées et ne concernent que vous et votre
+                        gestionnaire.
+                    </p>
+                </div>
+                <div class="col">
+                    <h3>Plus de 1300 établissements bancaires</h3>
+                    <p>
+                        Avec Linxo, nous sommes capables d’accéder à grande
+                        diversités d’établissement pour vous permettre d’avoir
+                        toujours votre espace My Family Dashboard à jour.
+                    </p>
+                    <a
+                        href="https://developers.linxo.com/payments/direct-payment-providers/"
+                        target="_blank"
+                        >Voir la liste des établissements <i
+                            class="ph ph-arrow-up-right"></i></a
+                    >
+                </div>
+            </div>
+            <div class="linxo-logo-container">
+                <img src="../../public/linxo.png" alt="" class="linxo-logo" />
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="FAQ">
+        <div class="FAQ-container">
+            <div class="title-container">
+                <p class="surtitle">quelques précisions</p>
+                <h2>Questions fréquentes</h2>
+            </div>
+            <div class="questions-container">
+                <FaqItem
+                    question="Où sont stockées mes données ?"
+                    group="securite-faq"
+                >
+                    <strong>
+                        Toutes vos données sont hébergées en France, sur des
+                        serveurs Scaleway à Paris.
+                    </strong> Aucune donnée ne transite vers des infrastructures américaines
+                    soumises au Cloud Act. Cette architecture garantit une conformité
+                    totale au RGPD et vous assure une souveraineté complète sur vos
+                    informations patrimoniales.
+                </FaqItem>
+                <FaqItem
+                    question="Qui a accès à mon espace personnel ?"
+                    group="securite-faq"
+                >
+                    Vous seul, ainsi que les personnes que vous avez
+                    explicitement invitées (conjoint, enfants, conseiller). Vous
+                    pouvez révoquer leur accès à tout moment en un clic.
+                </FaqItem>
+                <FaqItem
+                    question="Qui peut voir mes informations de connexion bancaire ?"
+                    group="securite-faq"
+                >
+                    Personne — ni MFD, ni votre conseiller. Vos identifiants
+                    sont saisis uniquement dans l'interface sécurisée de Linxo
+                    Connect (établissement agréé ACPR) et ne transitent jamais
+                    par nos serveurs.
+                </FaqItem>
+                <FaqItem
+                    question="MFD détient il mon argent ?"
+                    group="securite-faq"
+                >
+                    Non, MFD est un outil de pilotage 100 % consultatif, sans
+                    accès en écriture sur vos comptes.
+                </FaqItem>
+                <FaqItem
+                    question="Mes données sont elles utilisées à des fins commerciales ou revendues ?"
+                    group="securite-faq"
+                >
+                    Jamais. Aucune donnée n'est partagée, revendue ou exploitée
+                    à des fins publicitaires.
+                </FaqItem>
+                <FaqItem
+                    question="Comment puis je récupérer mes données ?"
+                    group="securite-faq"
+                >
+                    Export complet disponible à tout moment depuis votre espace
+                    (PDF, Excel), conformément au droit à la portabilité RGPD.
+                </FaqItem>
+                <FaqItem
+                    question="Que se passe t il si je supprime mon compte ?"
+                    group="securite-faq"
+                >
+                    Vos données personnelles et patrimoniales sont
+                    définitivement effacées de nos serveurs sous 30 jours,
+                    conformément au RGPD. Vous pouvez aussi exporter l'ensemble
+                    de vos données avant suppression.
+                </FaqItem>
+            </div>
+        </div>
+    </section>
+
+    <Offre />
+</Layout>

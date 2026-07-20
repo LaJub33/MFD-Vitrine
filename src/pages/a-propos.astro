@@ -1,0 +1,175 @@
+---
+import AmbitionCard from "./Components/AmbitionCard.astro";
+import Offre from "./Components/offre.astro";
+import Layout from "./layout.astro";
+---
+
+<Layout>
+    <!--Hero Section -->
+    <section class="a-propos-hero">
+        <div class="wrapper">
+            <h1><span>My Family Dashboard</span> et son histoire</h1>
+            <a href="#genese"
+                >Découvrir la génèse <i class="ph ph-caret-double-down"></i></a
+            >
+        </div>
+        <img
+            src="public/a-propos-hero-background.svg"
+            alt=""
+            class="background-image"
+        />
+    </section>
+
+    <!--GENESE SECTION -->
+    <section class="genese" id="genese">
+        <div class="wrapper">
+            <div class="genese-cards">
+                <div class="genese-card">
+                    <img src="public/Genese.jpg" alt="" class="card-image" />
+                    <div class="content">
+                        <h2>La genèse</h2>
+                        <p>
+                            My Family Dashboard est né de cette ambition : créer
+                            un socle technologique indépendant capable de
+                            modéliser le patrimoine dans sa réalité juridique,
+                            financière et humaine. Dès l'origine, nous avons
+                            conçu la plateforme comme : un moteur de
+                            structuration multi-entités, un outil de
+                            consolidation transverse, un environnement
+                            collaboratif sécurisé entre professionnels et
+                            familles, une architecture évolutive capable
+                            d'accompagner le cycle de vie patrimonial.
+                        </p>
+                    </div>
+                </div>
+                <div class="genese-card">
+                    <img
+                        src="public/Conviction.jpg"
+                        alt=""
+                        class="card-image"
+                    />
+                    <div class="content">
+                        <h2>Notre conviction</h2>
+                        <p>
+                            Le patrimoine des familles s'est complexifié. Les
+                            structures juridiques se multiplient, les actifs se
+                            diversifient, les interlocuteurs se spécialisent.
+                            Pourtant, l'infrastructure de pilotage reste
+                            fragmentée. Les professionnels du patrimoine doivent
+                            composer avec une donnée éclatée, hétérogène,
+                            rarement consolidée dans une architecture cohérente.
+                            Cette fragmentation limite la vision stratégique et
+                            freine l'industrialisation du conseil à haute valeur
+                            ajoutée. Nous sommes convaincus qu'une nouvelle
+                            génération d'outils est nécessaire : non pas des
+                            logiciels centrés sur le produit, mais une
+                            infrastructure pensée pour le pilotage patrimonial
+                            global.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--SOUVERAINETE SECTION -->
+    <section class="souverainete">
+        <div class="wrapper">
+            <div class="title-container">
+                <p class="surtitle">Un principe fondateur</p>
+                <h2>La souveraineté des données</h2>
+            </div>
+            <p>
+                <strong
+                    >Vos données sont hébergées en France, sur des serveurs
+                    Scaleway à Paris, conformément au RGPD. Nous avons fait le
+                    choix de ne pas recourir aux infrastructures cloud
+                    américaines, garantissant ainsi une souveraineté totale sur
+                    vos informations patrimoniales.</strong
+                > Vos données sont protégées par un chiffrement de
+                bout en bout — aussi bien lors de leur transfert (HTTPS/TLS)
+                qu'au repos (AES-256). Vos sessions sont automatiquement
+                déconnectées en cas d'inactivité, et chaque membre de votre
+                famille n'accède qu'aux informations qui le concernent. My
+                Family Dashboard ne détient aucun fonds et opère uniquement en
+                lecture seule sur vos comptes — vos données ne sont jamais
+                revendues ni utilisées à des fins commerciales. Vous pouvez à
+                tout moment accéder, modifier, exporter ou supprimer vos
+                données. En cas d'incident, vous êtes notifié sous 72h
+                conformément à la réglementation européenne.
+            </p>
+            <img
+                src="public/souverainete-image.png"
+                alt=""
+                class="background-image"
+            />
+        </div>
+    </section>
+
+    <!-- AMBITION SECTION -->
+    <section class="ambition">
+        <div class="ambition-container wrapper">
+            <h2>Notre ambition</h2>
+            <p class="subtitle">
+                Devenir l’infrastructure de référence pour les professionnels du
+                patrimoine souhaitant :
+            </p>
+            <div class="ambition-cards">
+                <AmbitionCard
+                    icon="public/ChartDonut.svg"
+                    title="Structurer des patrimoines complexes"
+                />
+                <AmbitionCard
+                    icon="public/GridFour.svg"
+                    title="Elever leur niveau de reporting"
+                />
+                <AmbitionCard
+                    icon="public/Fingerprint.svg"
+                    title="Sécuriser la transmission d'informations"
+                />
+                <AmbitionCard
+                    icon="public/Hourglass.svg"
+                    title="Inscrire leur pratique dans une logique durable et indépendante"
+                />
+            </div>
+        </div>
+        <img
+            src="public/ambition-background.svg"
+            alt=""
+            class="background-image"
+        />
+    </section>
+
+    <!--CITATION SECTION -->
+    <section class="citation">
+        <div class="citation-container wrapper">
+            <div class="content">
+                <h3>
+                    My Family Dashboard n’est pas un outil supplémentaire. C’est
+                    une fondation technologique pour le patrimoine de demain.
+                </h3>
+                <div class="signature-content">
+                    <p class="citation-name">François Jubin</p>
+                    <p class="subtitle">CEO - My Family Dashboard</p>
+                </div>
+            </div>
+            <div class="photo-container">
+                <img src="public/fj-image.png" alt="" class="citation-photo" />
+            </div>
+
+            <img
+                src="public/citation-background.svg"
+                alt=""
+                class="background-image quote1"
+            />
+            <img
+                src="public/citation-background.svg"
+                alt=""
+                class="background-image quote2"
+            />
+        </div>
+    </section>
+
+    <!--OFFRE SECTION -->
+    <Offre />
+</Layout>
