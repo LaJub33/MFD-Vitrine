@@ -1,0 +1,75 @@
+---
+import Header from "../components/header.astro";
+import Footer from "../components/footer.astro";
+import "../pages/global.css";
+---
+
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<link
+			rel="icon"
+			type="image/svg+xml"
+			href="/favicon-black.svg"
+			media="(prefers-color-scheme: light)"
+		/>
+		<link
+			rel="icon"
+			type="image/svg+xml"
+			href="/favicon-white.svg"
+			media="(prefers-color-scheme: dark)"
+		/>
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<meta
+			name="description"
+			content="My Family Dashboard est l'infrastructure patrimoniale pensée pour les professionnels du patrimoine et leurs clients : structuration, reporting et sécurité des données."
+		/>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="preload"
+			as="style"
+			href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap"
+			onload="this.onload=null;this.rel='stylesheet'"
+		/>
+		<link
+			rel="preload"
+			as="style"
+			href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
+			onload="this.onload=null;this.rel='stylesheet'"
+		/>
+		<noscript>
+			<link
+				href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap"
+				rel="stylesheet"
+			/>
+			<link
+				rel="stylesheet"
+				href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
+			/>
+		</noscript>
+		<title>My Family Dashboard</title>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<slot />
+		</main>
+		<Footer />
+	</body>
+	<script>
+		const updateHeaderHeight = () => {
+			const header = document.querySelector("header");
+			if (header) {
+				document.documentElement.style.setProperty(
+					"--header-height",
+					`${header.offsetHeight}px`
+				);
+			}
+		};
+		updateHeaderHeight();
+		window.addEventListener("resize", updateHeaderHeight);
+	</script>
+</html>

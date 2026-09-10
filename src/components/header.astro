@@ -1,0 +1,292 @@
+---
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<header class="header">
+    <div class="header-bg"></div>
+    <div class="desktop-nav wrapper">
+        <nav>
+            <ul>
+                <li>
+                    <a href="/" class={currentPath === "/" ? "active" : ""}
+                        >Accueil</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="/securite"
+                        class={currentPath === "/securite" ? "active" : ""}
+                        >Securité</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="/a-propos"
+                        class={currentPath === "/a-propos" ? "active" : ""}
+                        >À propos</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="/contact"
+                        class={currentPath === "/contact" ? "active" : ""}
+                        >Contact</a
+                    >
+                </li>
+            </ul>
+        </nav>
+        <div class="logo-container">
+            <a href="/"
+                ><img src="/logo.svg" alt="My Family Dashboard Logo" /></a
+            >
+        </div>
+        <div class="boutons-container">
+            <a
+                href="https://schedule.fillout.com/t/d2Ms54V8C2us"
+                target="_blank"
+                class="btn btn-tertiary"
+                >Demander une démo<i class="ph ph-arrow-up-right"></i></a
+            >
+            <a
+                href="https://app.myfamilydashboard.com/"
+                class="btn btn-primary"
+                target="_blank">Connexion</a
+            >
+        </div>
+    </div>
+    <div id="mobile-nav" class="mobile-nav-container">
+        <div class="mobile-bar">
+            <div class="logo-container">
+                <a href="/"> <img src="/logo.svg" alt="" class="logo" /></a>
+            </div>
+            <button id="open-menu" class="open-menu-btn btn btn-secondary"
+                ><i class="ph ph-list"></i></button
+            >
+        </div>
+
+        <div class="nav-overlay">
+            <div class="head">
+                <div class="logo-container">
+                    <img src="/logo.svg" alt="" class="logo" />
+                </div>
+                <button id="close-menu" class="close-menu btn btn-secondary"
+                    ><i class="ph ph-x"></i></button
+                >
+            </div>
+            <div class="nav-container">
+                <nav>
+                    <a href="/" class={currentPath === "/" ? "active" : ""}
+                        >Accueil</a
+                    >
+                    <div class="separator"></div>
+                    <a
+                        href="/securite"
+                        class={currentPath === "/securite" ? "active" : ""}
+                        >Sécurité</a
+                    >
+                    <div class="separator"></div>
+
+                    <a
+                        href="/a-propos"
+                        class={currentPath === "/a-propos" ? "active" : ""}
+                        >A propos</a
+                    >
+                    <div class="separator"></div>
+                    <a
+                        href="/contact"
+                        class={currentPath === "/contact" ? "active" : ""}
+                        >Contact</a
+                    >
+                    <div class="separator"></div>
+                </nav>
+                <div class="boutons-container">
+                    <a
+                        href="https://schedule.fillout.com/t/d2Ms54V8C2us"
+                        target="_blank"
+                        class="btn btn-tertiary"
+                        >Demander une démo<i class="ph ph-arrow-up-right"
+                        ></i></a
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<script>
+    const mobileNav = document.querySelector("#mobile-nav")!;
+    const openButton = document.querySelector("#open-menu")!;
+    const closeButton = document.querySelector("#close-menu")!;
+
+    openButton.addEventListener("click", () => {
+        mobileNav.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+    });
+
+    closeButton.addEventListener("click", () => {
+        mobileNav.classList.remove("is-open");
+        document.body.style.overflow = "";
+    });
+</script>
+
+<style>
+    header {
+        width: 100%;
+        top: 0;
+        position: sticky;
+        margin: 0;
+        z-index: 100;
+    }
+
+    .header-bg {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background-color: #ffffff75;
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+    }
+
+    header .wrapper {
+        padding: 32px;
+        max-width: 1280px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        vertical-align: middle;
+        margin: 0 auto;
+    }
+
+    header nav {
+        width: 100%;
+    }
+
+    header nav ul {
+        display: flex;
+        flex-direction: row;
+        gap: 24px;
+        padding: 0;
+    }
+
+    header nav ul li {
+        list-style: none;
+    }
+
+    header nav a {
+        text-decoration: none;
+        color: var(--black);
+    }
+
+    header nav a:hover {
+        font-weight: 600;
+    }
+
+    header nav a:active {
+        font-weight: 600;
+    }
+
+    header nav a.active {
+        font-weight: 600;
+    }
+
+    .logo-container {
+        width: fit-content;
+    }
+
+    .boutons-container {
+        width: 100%;
+
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        justify-content: flex-end;
+    }
+
+    .header .mobile-nav-container {
+        display: none;
+    }
+
+    /*NAV LAYER*/
+    @media (max-width: 1024px) {
+        .header .mobile-nav-container {
+            display: block;
+        }
+
+        .header .desktop-nav {
+            display: none;
+        }
+    }
+
+    .mobile-bar {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 32px;
+        background-color: #ffffff75;
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+    }
+
+    .nav-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow-y: auto;
+        flex-direction: column;
+        gap: 24px;
+        padding: 40px;
+        background-color: var(--white);
+        z-index: 200;
+    }
+
+    .mobile-nav-container.is-open .nav-overlay {
+        display: flex;
+    }
+
+    .nav-overlay .head {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .nav-overlay .nav-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        flex: 1;
+    }
+
+    .nav-overlay .nav-container nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .nav-overlay .nav-container nav a {
+        width: 100%;
+        padding: 16px 0;
+        text-align: center;
+        text-decoration: none;
+        color: var(--black);
+        font-weight: 600;
+    }
+
+    .nav-overlay .separator {
+        width: 100%;
+        height: 1px;
+        background-color: var(--black90W);
+    }
+
+    .nav-overlay .boutons-container {
+        justify-content: center;
+    }
+</style>

@@ -1,0 +1,141 @@
+---
+import Layout from "../layouts/layout.astro";
+---
+
+<Layout>
+    <section class="contact-hero wrapper">
+        <div class="title-container">
+            <h1>Contactez nous</h1>
+            <p class="subtitle">
+                Vous souhaitez en savoir plus sur My Family Dashboard ?
+                N'hésitez pas à nous contacter !
+            </p>
+        </div>
+        <div class="contact-container">
+            <div class="col">
+                <h2>Formulaire de contact</h2>
+                <form
+                    id="contact-form"
+                    class="contact-form"
+                    action="https://formspree.io/f/mqevoool"
+                    method="POST"
+                >
+                    <label for="name">Nom complet</label>
+                    <input
+                        type="text"
+                        placeholder="François Jubin"
+                        id="name"
+                        name="name"
+                        required
+                    />
+
+                    <label for="email">Email</label>
+                    <input
+                        type="email"
+                        placeholder="exemple@myfamilydashboard.com"
+                        id="email"
+                        name="_replyto"
+                        required
+                    />
+
+                    <label for="subject">Sujet</label>
+                    <input
+                        type="text"
+                        placeholder="Sujet de votre message"
+                        id="subject"
+                        name="subject"
+                        required
+                    />
+
+                    <label for="message">Message</label>
+                    <textarea
+                        id="message"
+                        placeholder="Saisissez votre message ici..."
+                        name="message"
+                        rows="6"
+                        required></textarea>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary form-status"
+                        role="status"
+                        >Envoyer <i class="ph ph-paper-plane-tilt"></i>
+                    </button>
+                    <!-- <br />
+                    <p class="form-status" role="status"></p> -->
+                </form>
+
+                <script>
+                    const form = document.querySelector(
+                        "#contact-form",
+                    ) as HTMLFormElement;
+                    const status = form.querySelector(".form-status")!;
+                    const submitButton = form.querySelector(
+                        "button[type=submit]",
+                    ) as HTMLButtonElement;
+                    const originalButtonHTML = submitButton.innerHTML;
+
+                    form.addEventListener("submit", async (e) => {
+                        e.preventDefault();
+                        submitButton.disabled = true;
+                        status.textContent = "Envoi en cours...";
+
+                        try {
+                            const res = await fetch(form.action, {
+                                method: "POST",
+                                body: new FormData(form),
+                                headers: { Accept: "application/json" },
+                            });
+
+                            if (!res.ok) throw new Error("Request failed");
+
+                            status.textContent = "Message envoyé !";
+                            form.reset();
+                        } catch {
+                            status.textContent = "Une erreur est survenue.";
+                        } finally {
+                            submitButton.disabled = false;
+                            setTimeout(() => {
+                                status.innerHTML = originalButtonHTML;
+                            }, 5000);
+                        }
+                    });
+
+                    const copyEmailButton = document.querySelector(
+                        "#copy-email-button",
+                    ) as HTMLButtonElement;
+                    const emailText =
+                        document.querySelector(".email")!.textContent!;
+                    const originalCopyButtonHTML = copyEmailButton.innerHTML;
+
+                    copyEmailButton.addEventListener("click", async () => {
+                        await navigator.clipboard.writeText(emailText.trim());
+                        copyEmailButton.textContent = "Copié !";
+                        setTimeout(() => {
+                            copyEmailButton.innerHTML = originalCopyButtonHTML;
+                        }, 3000);
+                    });
+                </script>
+                <img
+                    src="/Contact-background.svg"
+                    alt=""
+                    class="background-image"
+                />
+            </div>
+            <div class="col email-container">
+                <h2>Email</h2>
+                <div class="email-content">
+                    <p class="email">contact@myfamilydashboard.com</p>
+                    <button id="copy-email-button" class="btn btn-secondary"
+                        >Copier l'email <i class="ph ph-copy"></i></button
+                    >
+                </div>
+                <img
+                    src="/email-background.svg"
+                    alt=""
+                    class="background-image"
+                />
+            </div>
+        </div>
+    </section>
+</Layout>

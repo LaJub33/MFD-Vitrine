@@ -1,0 +1,134 @@
+<footer class="footer wrapper">
+    <div class="row">
+        <div class="col1">
+            <ul class="footer-links nav-links">
+                <li><a href="../">Accueil</a></li>
+                <li><a href="securite">Vos données</a></li>
+                <li><a href="a-propos">À propos</a></li>
+                <li><a href="contact">Contact</a></li>
+            </ul>
+            <ul class="footer-links legal-links">
+                <li><a href="#">Mentions légales</a></li>
+                <li><a href="#">Politique de confidentialité</a></li>
+                <li><a href="#">Conditions d'utilisation</a></li>
+            </ul>
+        </div>
+        <div class="col2">
+            <div class="logo-container">
+                <a href="/"
+                    ><img src="/logo.svg" alt="My Family Dashboard Logo" /></a
+                >
+            </div>
+        </div>
+        <div class="col3">
+            <div class="social-container">
+                <a
+                    href="https://www.linkedin.com/in/fran%C3%A7ois-jubin-40774a6/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <img src="/Linkedin.svg" alt="LinkedIn" />
+                </a>
+            </div>
+            <div class="app-access">
+                <a href="https://app.myfamilydashboard.com/" target="_blank">
+                    Accéder à l'app <i class="ph ph-arrow-up-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .footer {
+        padding: 80px 32px;
+    }
+
+    .footer .row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+    }
+
+    .footer .col1 {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        flex: 1;
+        white-space: nowrap;
+        font-size: 12px;
+    }
+
+    .footer .col2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 2;
+    }
+
+    .footer .col3 {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1;
+        white-space: nowrap;
+        text-align: right;
+        align-self: stretch;
+    }
+
+    .footer .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 0;
+    }
+
+    .footer .footer-links li {
+        list-style: none;
+    }
+
+    .footer .nav-links a {
+        text-decoration: none;
+        color: var(--black50W);
+    }
+
+    .footer .legal-links a {
+        text-decoration: none;
+        color: var(--black10W);
+    }
+
+    .app-access a {
+        text-decoration: none;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 12px;
+    }
+
+    @media (max-width: 1024px) {
+        .app-access {
+            display: none;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .footer {
+            padding: 24px;
+        }
+
+        .footer .row {
+            flex-direction: column;
+            align-items: start;
+            gap: 80px;
+        }
+
+        .row .col2 {
+            width: 100%;
+        }
+
+        .row .col3 {
+            text-align: center;
+        }
+    }
+</style>

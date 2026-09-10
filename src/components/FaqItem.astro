@@ -1,0 +1,84 @@
+---
+interface Props {
+    question: string;
+    group?: string;
+}
+
+const { question, group } = Astro.props;
+---
+
+<details class="faq-item" name={group}>
+    <summary>
+        <h4>{question}</h4>
+        <i class="ph ph-caret-down chevron"></i>
+    </summary>
+    <div class="content">
+        <p class="subtitle">
+            <slot />
+        </p>
+    </div>
+</details>
+
+<style>
+    .faq-item {
+        padding: 24px;
+        background-color: var(--white);
+        border-radius: var(--border-radius);
+        max-width: 800px;
+    }
+
+    .faq-item summary {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        cursor: pointer;
+        list-style: none;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .faq-item .chevron {
+        flex-shrink: 0;
+        transition: transform 0.2s ease;
+        transform: rotate(180deg);
+    }
+
+    .faq-item[open] h4 {
+        color: var(--primary);
+    }
+
+    .faq-item[open] .chevron {
+        transform: rotate(0deg);
+    }
+
+    .faq-item h4 {
+        font-size: 16px;
+    }
+
+    .faq-item::details-content {
+        display: block;
+        overflow: visible;
+        content-visibility: visible;
+        block-size: auto;
+    }
+
+    .faq-item .content {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.3s ease;
+    }
+
+    .faq-item[open] .content {
+        grid-template-rows: 1fr;
+    }
+
+    .faq-item .content p {
+        min-height: 0;
+        overflow: hidden;
+        padding-top: 16px;
+    }
+</style>
